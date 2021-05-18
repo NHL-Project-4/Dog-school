@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace Dog_school
@@ -22,23 +20,30 @@ namespace Dog_school
 
         public static void ConfigureServices(IServiceCollection services)
         {
-            // Add MVC components to project
-            services.AddControllersWithViews();
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            // Add razor pages component to project
+            services.AddRazorPages();
         }
 
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-            else app.UseExceptionHandler("/Error");
+            if (!env.IsDevelopment())
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
+            else
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
             // Set ASP.NET preferences
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthorization();
 
             // Add endpoints
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
+            app.UseEndpoints(endpoints => endpoints.MapRazorPages());
         }
     }
 }
