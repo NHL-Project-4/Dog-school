@@ -7,6 +7,7 @@ School project made in C# using [ASP.NET](https://dotnet.microsoft.com/apps/aspn
 This project uses the following NuGet packages:
 
 - [BCrypt.NET-Next](https://www.nuget.org/packages/BCrypt.Net-Next).
+- [Dapper](https://www.nuget.org/packages/Dapper).
 
 ### Setup
 
