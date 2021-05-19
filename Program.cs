@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace Dog_school
 {
@@ -12,7 +13,7 @@ namespace Dog_school
             // Configure host builder
             var builder = Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(hostBuilder => hostBuilder.UseStartup<Program>());
-
+            
             // Build ASP.NET host
             var host = builder.Build();
             host.Run();
@@ -22,6 +23,24 @@ namespace Dog_school
         {
             // Add razor pages component to project
             services.AddRazorPages();
+
+
+            // Add session data to keep data in for the current user session.
+            services.AddSession();
+            services.AddMemoryCache();
+            services.AddMvc(options => options.EnableEndpointRouting = false);
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.Cookie.Name = "sessionID";
+            });
+            // Some anti forgery stuff needed to keep the session safe.
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
+
+
         }
 
         public static void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,13 +55,22 @@ namespace Dog_school
                 app.UseDeveloperExceptionPage();
             }
 
-            // Set ASP.NET preferences
+
+
+            //for session data
+            app.UseSession();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller}/{action=Index}/{id?}");
+            });
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
-
-            // Add endpoints
             app.UseEndpoints(endpoints => endpoints.MapRazorPages());
         }
     }
