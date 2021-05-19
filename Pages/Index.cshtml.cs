@@ -22,12 +22,6 @@ namespace Dog_school.Pages
             ViewData["Name"] = HttpContext.Session.GetInt32("DataName");
             int ass = (int)ViewData["Name"];
         }
-
-
-
-
-
-
     }
 }
 
