@@ -1,14 +1,15 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Login page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="text-center ">
+    <img class="row-1" src="images/unknown.png" alt="logo" width="30%" style="margin: 3%">
+    <form class="row-2 col-4" style="margin: 0 auto">
+        <input type="text" class="form-control" id="username" name="username" placeholder="Username"><br>
+        <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password"><br>
+        <button type="submit" style="background: #fd7e14;color: white;border-radius: 15px;border: none">Login</button>
+    </form>
+
 </div>
-
-
-
-
