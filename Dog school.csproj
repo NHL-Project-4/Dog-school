@@ -7,6 +7,15 @@
 
     <ItemGroup>
       <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+      <PackageReference Include="Dapper" Version="2.0.90" />
+      <PackageReference Include="Microsoft.AspNet.WebPages" Version="3.2.7" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0-preview.3.21201.2" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0-preview.3.21201.2" />
+      <PackageReference Include="MySql.Data" Version="8.0.25" />
+      <PackageReference Include="MySql.Data.Entities.EF6" Version="6.8.1-alpha2" />
+      <PackageReference Include="SqlMapper" Version="2.0.0" />
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
+      <PackageReference Include="WebMatrix.Data" Version="2.0.30506" />
     </ItemGroup>
 
 </Project>
