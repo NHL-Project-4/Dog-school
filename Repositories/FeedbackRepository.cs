@@ -12,7 +12,7 @@ namespace Dog_school.Repositories
             return new MySqlConnection(
                 "Server=127.0.0.1;Port=3306;Database=hondenschool;Uid=root;Pwd=Test@1234!");
         }
-        public IEnumerable<Feedback> Get()
+        public IEnumerable<Feedback> Get() 
         {
             using var connect = Connect();
             var acc = connect.Query<Feedback>("SELECT * FROM feedback");

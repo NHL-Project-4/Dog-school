@@ -19,8 +19,6 @@ namespace Dog_school.Repositories
             return acc;
         }
 
-        
-
         public void MakeCourse(Dog Data)
         {
             using var connect = Connect();

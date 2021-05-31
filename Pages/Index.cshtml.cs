@@ -1,13 +1,20 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Dog_school.Repositories;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace Dog_school.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        [BindProperty]
+        public User LogUser { get; set; }
 
+
+        private readonly ILogger<IndexModel> _logger;
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
@@ -22,7 +29,37 @@ namespace Dog_school.Pages
             ViewData["Name"] = HttpContext.Session.GetInt32("DataName");
             int ass = (int)ViewData["Name"];
         }
+
+        public IActionResult OnPostLogin()
+        {
+            try
+            {
+                LogUser = new UserRepository().Login(LogUser.Name, LogUser.Password);
+            }
+            catch //if the user doesnt exist
+            {
+
+            }
+
+            if (LogUser == null) return new PageResult(); //if the password isnt right
+
+            //if both are right
+            string[] roles = {LogUser.Admin_permission.ToString(),LogUser.User_ID.ToString()};
+            GenericPrincipal user = new GenericPrincipal(new ClaimsIdentity(LogUser.Name), roles );
+            HttpContext.User = user;
+            if (LogUser.Admin_permission)
+            {
+                return RedirectToPage("Admin");
+            }
+            else
+            {
+                return RedirectToPage("Klant");
+            }
+        }
+
+
     }
+
 }
 
 //to get the data always use viewdata as this:
