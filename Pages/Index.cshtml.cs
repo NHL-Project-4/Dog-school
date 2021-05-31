@@ -1,65 +1,48 @@
-﻿using Dog_school.Repositories;
+﻿using System.Security.Claims;
+using System.Security.Principal;
+using System.Threading.Tasks;
+using Dog_school.Database.Models;
+using Dog_school.Database.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
-using System.Security.Claims;
-using System.Security.Principal;
 
 namespace Dog_school.Pages
 {
     public class IndexModel : PageModel
     {
-        [BindProperty]
-        public User LogUser { get; set; }
-
-
         private readonly ILogger<IndexModel> _logger;
+
         public IndexModel(ILogger<IndexModel> logger)
         {
             _logger = logger;
         }
 
+        [BindProperty] public User? LogUser { get; set; }
+
         public void OnGet()
         {
-
-
             //example
             HttpContext.Session.SetInt32("DataName", 1);
             ViewData["Name"] = HttpContext.Session.GetInt32("DataName");
-            int ass = (int)ViewData["Name"];
+            var ass = (int) ViewData["Name"];
         }
 
-        public IActionResult OnPostLogin()
+        public async Task<IActionResult> OnPostLogin()
         {
-            try
-            {
-                LogUser = new UserRepository().Login(LogUser.Name, LogUser.Password);
-            }
-            catch //if the user doesnt exist
-            {
-
-            }
-
-            if (LogUser == null) return new PageResult(); //if the password isnt right
+            LogUser = await UserRepository.GetUser(LogUser.Name, LogUser.Password);
+            if (LogUser == null)
+                // TODO: Impl
+                return new PageResult();
 
             //if both are right
-            string[] roles = {LogUser.Admin_permission.ToString(),LogUser.User_ID.ToString()};
-            GenericPrincipal user = new GenericPrincipal(new ClaimsIdentity(LogUser.Name), roles );
+            string[] roles = {LogUser.Admin_permission.ToString(), LogUser.User_ID.ToString()};
+            GenericPrincipal user = new(new ClaimsIdentity(LogUser.Name), roles);
             HttpContext.User = user;
-            if (LogUser.Admin_permission)
-            {
-                return RedirectToPage("Admin");
-            }
-            else
-            {
-                return RedirectToPage("Klant");
-            }
+            return RedirectToPage(LogUser.Admin_permission ? "Admin" : "Klant");
         }
-
-
     }
-
 }
 
 //to get the data always use viewdata as this:
