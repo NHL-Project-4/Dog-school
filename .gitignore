@@ -2,4 +2,6 @@
 .idea
 bin
 obj
-.vs/Dog school/v16/.suo
+
+# Visual studio files
+.vs

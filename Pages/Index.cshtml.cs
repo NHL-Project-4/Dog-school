@@ -1,4 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.Security.Claims;
+using System.Security.Principal;
+using System.Threading.Tasks;
+using Dog_school.Database.Models;
+using Dog_school.Database.Repositories;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
@@ -13,14 +19,28 @@ namespace Dog_school.Pages
             _logger = logger;
         }
 
+        [BindProperty] public User? LogUser { get; set; }
+
         public void OnGet()
         {
-
-
             //example
             HttpContext.Session.SetInt32("DataName", 1);
             ViewData["Name"] = HttpContext.Session.GetInt32("DataName");
-            int ass = (int)ViewData["Name"];
+            var ass = (int) ViewData["Name"];
+        }
+
+        public async Task<IActionResult> OnPostLogin()
+        {
+            LogUser = await UserRepository.GetUser(LogUser.Name, LogUser.Password);
+            if (LogUser == null)
+                // TODO: Impl
+                return new PageResult();
+
+            //if both are right
+            string[] roles = {LogUser.Admin_permission.ToString(), LogUser.User_ID.ToString()};
+            GenericPrincipal user = new(new ClaimsIdentity(LogUser.Name), roles);
+            HttpContext.User = user;
+            return RedirectToPage(LogUser.Admin_permission ? "Admin" : "Klant");
         }
     }
 }

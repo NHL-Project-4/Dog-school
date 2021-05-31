@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Dog_school.Repositories
+namespace Dog_school.Database.Models
 {
-    public class Course : Database
+    public class Course
     {
         public int Course_ID { get; set; }
         public string Name { get; set; }
@@ -10,6 +10,5 @@ namespace Dog_school.Repositories
         public DateTime Start_date { get; set; }
         public DateTime Finish_date { get; set; }
         public string Note { get; set; }
-        
     }
 }

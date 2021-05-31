@@ -9,11 +9,12 @@
 </style>
 <div class="text-center">
     <img class="row-1" src="images/unknown.png" alt="logo" width="25%" style="margin: 3%">
-    <form class="row-2 col-4" style="margin: 0 auto">
-        <input type="text" class="form-control" id="username" name="username" placeholder="Username"><br>
-        <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password"><br>
-        <button type="submit" asp-page="./Klant" style="background: #fd7e14;color: white;border-radius: 15px;border: none;padding: 5px;padding-left: 10px;padding-right: 10px;">Login Klant</button>
-        <button type="submit" asp-page="./Admin" style="background: #fd7e14;color: white;border-radius: 15px;border: none;padding: 5px;padding-left: 10px;padding-right: 10px;">Login Admin</button>
+    <form class="row-2 col-4" style="margin: 0 auto" method="post">
+        <input type="text" class="form-control" id="username" placeholder="Username" asp-for="LogUser.Name" required><br>
+        <span asp-validation-for="LogUser.Name"></span>
+        <input type="password" class="form-control" id="pwd" placeholder="Password" asp-for="LogUser.Password" required><br>
+        <span asp-validation-for="LogUser.Password"></span>
+        <button asp-page-handler="Login" type="submit" style="background: #fd7e14;color: white;border-radius: 15px;border: none;padding: 5px;padding-left: 10px;padding-right: 10px;">Login</button>
     </form>
 
 </div>

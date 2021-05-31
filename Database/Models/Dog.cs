@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dog_school.Repositories
+namespace Dog_school.Database.Models
 {
     public class Dog
     {
