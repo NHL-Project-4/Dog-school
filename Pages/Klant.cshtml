@@ -1,0 +1,52 @@
+﻿@page
+@model Dog_school.Pages.Klant
+
+
+@{
+    ViewData["Title"] = "Klant Pagina";
+}
+
+<style>
+    #navLinks{opacity: 0;}
+    #logoutbtn{opacity: 1;}
+    .orangebold{color: #fd7e14;font-weight: bolder}
+    
+</style>
+<div class="row">
+    <div id="klantInfo" class="col-4">
+        <h1 class="orangebold">Naam Klant</h1>
+        <p>Adres</p>
+        <p>Postcode en Woonplaats</p>
+        <p>Telefoonnummer</p>
+        <p>E-mailadres</p>
+    </div>
+    <div id="hondInfo" class="col-8">
+        <div id="hond1" class="col-12" style="margin: 3%; height: 250px;">
+            <h2 class="orangebold">Naam Hond</h2>
+            <img class="col-4" src="images/dog3.jpg" alt="logo" width="100%" style="float: left">
+
+            <div class="col-4" style="float: left">
+                <h3 class="orangebold">Afgeronde Lessen</h3>
+                <p>Puppycursus Les 1: 20-5-2021</p>
+            </div>
+            <div class="col-4" style="float: left">
+                <h3 class="orangebold">Komende Lessen</h3>
+                <p>Puppycursus Les 1: 5-6-2021</p>
+            </div>
+        </div>
+        <div id="hond2" class="col-12" style="margin: 3%; height: 250px;">
+            <h2 class="orangebold">Naam Hond</h2>
+            <img class="col-4" src="images/dog1.jpg" alt="logo" width="100%" style="float: left">
+
+            <div class="col-4" style="float: left">
+                <h3 class="orangebold">Afgeronde Lessen</h3>
+                <p>Puppycursus Les 1: 20-5-2021</p>
+            </div>
+            <div class="col-4" style="float: left">
+                <h3 class="orangebold">Komende Lessen</h3>
+                <p>Puppycursus Les 1: 5-6-2021</p>
+            </div>
+        </div>
+    </div>
+
+</div>
