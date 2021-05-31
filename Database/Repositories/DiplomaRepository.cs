@@ -1,0 +1,50 @@
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Dapper;
+using Dog_school.Database.Models;
+using static Dog_school.Database.Database;
+
+namespace Dog_school.Database.Repositories
+{
+    public static class DiplomaRepository
+    {
+        /// <summary>
+        ///     Gets all stored diplomas
+        /// </summary>
+        /// <returns>The stored diplomas</returns>
+        public static async Task<IEnumerable<Diploma>> GetDiplomas()
+        {
+            var connection = await GetConnection();
+            var result =
+                await connection.QueryAsync<Diploma>("SELECT * FROM diploma");
+            return result;
+        }
+
+        /// <summary>
+        ///     Gets all stored diplomas of a specific dog
+        /// </summary>
+        /// <param name="dogId">The dog id to search for</param>
+        /// <returns>The stored diplomas of the specified dog</returns>
+        public static async Task<IEnumerable<Diploma>> GetDiplomas(int dogId)
+        {
+            var connection = await GetConnection();
+            var result =
+                await connection.QueryAsync<Diploma>("SELECT * FROM diploma WHERE dogId = @Dog_ID",
+                    new {Dog_ID = dogId});
+            return result;
+        }
+
+        /// <summary>
+        ///     Stores a diploma instance in the database
+        /// </summary>
+        /// <param name="data">The diploma to save</param>
+        /// <returns>The amount of rows affected</returns>
+        public static async Task<int> Save(Diploma data)
+        {
+            var connection = await GetConnection();
+            return await connection.ExecuteAsync(
+                "INSERT INTO diploma VALUES(@Diploma_ID, @Dog_ID, @Date_of_exam, @Note)"
+                , new {data.Diploma_ID, data.Dog_ID, data.Date_of_exam, data.Note});
+        }
+    }
+}
