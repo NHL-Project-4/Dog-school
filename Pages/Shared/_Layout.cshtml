@@ -13,11 +13,11 @@
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background: #F26A37">
         <div id="navLinks" class="container">
             <a class="nav-link text-light" asp-area="" asp-page="/KlantToevoegen">Nieuwe Klant toevoegen</a>
-            <a class="nav-link text-light" asp-area="" asp-page="/Index">Klant bewerken</a>
-            <a class="nav-link text-light" asp-area="" asp-page="/Index">Les aan klant koppelen</a>
-            <a class="nav-link text-light" asp-area="" asp-page="/Index">Cursussen beheren</a>
+            <a class="nav-link text-light" asp-area="" asp-page="/KlantBewerken">Klant bewerken</a>
+            @*<a class="nav-link text-light" asp-area="" asp-page="/">Les aan klant koppelen</a>*@
+            <a class="nav-link text-light" asp-area="" asp-page="/CursussenBeheren">Cursussen beheren</a>
         </div>
-        <button id="logoutbtn" style="border:none;border-radius: 10px; color: #fd7e14;font-weight: bold;padding: 3px">Log uit</button>
+        <button id="logoutbtn" asp-page="./Index" style="border:none;border-radius: 10px; color: #fd7e14;font-weight: bold;padding: 3px">Log uit</button>
     </nav>
 </header>
 
