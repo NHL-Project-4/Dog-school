@@ -1,0 +1,76 @@
+﻿@page
+@model Dog_school.Pages.CursussenBeheren
+
+@{
+    ViewData["Title"] = "Cursussen Beheren";
+}
+
+<style>
+    #navLinks{opacity: 1;}
+    #logoutbtn{opacity: 1;}
+    
+    .orangebold{color: #fd7e14;font-weight: bold}
+    .floaty{float: left;}
+    .noMargin{margin: 0;}
+    .OrangeButton{
+        background: #fd7e14;
+        color: white;
+        border-radius: 15px;
+        border: none;
+        padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .greyBorder{
+        border: lightgrey 1px solid;
+        border-radius: 20px;
+    }
+</style>
+<div class="row-1">
+    <h2 class="orangebold">Cursussen beheren</h2>
+
+    <div class="col-5 floaty greyBorder" style="min-height: 200px;padding: 0;">
+        <div id="cursusheader" style="border-bottom: 1px solid lightgrey; padding: 4px; height: 30px">
+            <p class="col-6 noMargin floaty">Cursus</p>
+            <p class="col-5 noMargin floaty">Aankomende lesdatum</p>
+            <img class="floaty noMargin" src="images/baseline_sort_black_36dp.png" style="width: 25px;">
+        </div>
+        <div>
+            <div class="cursus">
+                <p class="col-6 noMargin floaty">Puppy cursus (Maandag)</p>
+                <p class="col-6 noMargin floaty">7-6-2021</p>
+            </div>
+            <div class="cursus">
+                <p class="col-6 noMargin floaty">Puppy cursus (Dinsdag)</p>
+                <p class="col-6 noMargin floaty">8-6-2021</p>
+            </div>
+            <div class="cursus">
+                <p class="col-6 noMargin floaty">Bewust samenwerken A (Woensdag)</p>
+                <p class="col-6 noMargin floaty">9-6-2021</p>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-4 floaty">
+        <div class="col-11 " style="margin: 0 auto;">
+            <h5 class="orangebold">Cursus naam</h5>
+            <p class="noMargin">Datum Start</p>
+            <p class="noMargin">Lesdag</p>
+            <p class="noMargin">Aankomende lesdatum</p>
+            <p class="noMargin greyBorder" style="min-height: 100px; padding: 2px;">Cursisten</p>
+        </div>
+        @*<div class="badge noMargin" >
+            <img src="images/baseline_military_tech_black_24dp.png" width="100%" height="100%">
+        </div>*@
+
+    </div>
+    <div class="col-3 floaty">
+        <h4 class="orangebold" style="margin:3%">Naam klant</h4>
+        <form>
+            <input type="text" class="form-control" name="lesnr" placeholder="Les Nummer"><br>
+            <textarea type="text" class="form-control" name="feedback" placeholder="Feedback" style="min-height: 50px;"></textarea><br>
+            <button class="OrangeButton" type="submit" asp-page="">Opslaan</button>
+        </form>
+    </div>
+
+</div>
