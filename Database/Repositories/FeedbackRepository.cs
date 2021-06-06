@@ -29,8 +29,8 @@ namespace Dog_school.Database.Repositories
         {
             var connection = await GetConnection();
             var result =
-                await connection.QueryAsync<Feedback>("SELECT * FROM feedback WHERE lessonId = @Lesson_ID",
-                    new {Lesson_ID = lessonId});
+                await connection.QueryAsync<Feedback>("SELECT * FROM feedback WHERE Lesson_ID = @lessonId",
+                    new {lessonId});
             return result;
         }
 

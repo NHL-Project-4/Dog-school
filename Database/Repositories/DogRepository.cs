@@ -29,7 +29,7 @@ namespace Dog_school.Database.Repositories
         {
             var connection = await GetConnection();
             var result =
-                await connection.QueryAsync<Dog>("SELECT * FROM dog WHERE userId = @User_ID", new {User_ID = userId});
+                await connection.QueryAsync<Dog>("SELECT * FROM dog WHERE User_ID = @userId", new {userId});
             return result;
         }
 

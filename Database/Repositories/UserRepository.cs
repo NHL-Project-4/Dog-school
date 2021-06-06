@@ -30,8 +30,8 @@ namespace Dog_school.Database.Repositories
         public static async Task<IEnumerable<User>> GetUsers(string username)
         {
             var connection = await GetConnection();
-            var result = await connection.QueryAsync<User>("SELECT * FROM user WHERE Name = @Username",
-                new {Username = username});
+            var result = await connection.QueryAsync<User>("SELECT * FROM user WHERE Name = @username",
+                new {username});
             return result;
         }
 
@@ -56,9 +56,7 @@ namespace Dog_school.Database.Repositories
         public static async Task<int> DeleteUser(int userId)
         {
             var connection = await GetConnection();
-            return await connection.ExecuteAsync(
-                "DELETE FROM user WHERE UserID = @User_ID"
-                , new {User_ID = userId});
+            return await connection.ExecuteAsync("DELETE FROM user WHERE User_ID = @userId", new {userId});
         }
 
         /// <summary>
