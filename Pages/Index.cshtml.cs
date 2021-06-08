@@ -37,10 +37,10 @@ namespace Dog_school.Pages
                 return new PageResult();
 
             //if both are right
-            string[] roles = {LogUser.Admin_permission.ToString(), LogUser.User_ID.ToString()};
+            string[] roles = {LogUser.AdminPermission.ToString(), LogUser.UserId.ToString()};
             GenericPrincipal user = new(new ClaimsIdentity(LogUser.Name), roles);
             HttpContext.User = user;
-            return RedirectToPage(LogUser.Admin_permission ? "Admin" : "Klant");
+            return RedirectToPage(LogUser.AdminPermission ? "Admin" : "Klant");
         }
     }
 }

@@ -21,16 +21,23 @@ namespace Dog_school.Database.Repositories
         }
 
         /// <summary>
-        ///     Stores a course instance in the database
+        ///     Saves a course instance in the database
         /// </summary>
-        /// <param name="course">The course to save</param>
+        /// <param name="course">The course to save or update</param>
         /// <returns>The amount of rows affected</returns>
         public static async Task<int> Save(Course course)
         {
             var connection = await GetConnection();
+
+            if (course.CourseId == null)
+                // Dont pass the course id for auto increment
+                return await connection.ExecuteAsync(
+                    "INSERT INTO course(Name, Intake, Start_date, Finish_date, Note) VALUES(@Name, @Intake, @StartDate, @FinishDate, @Note)"
+                    , new {course.Name, course.Intake, course.StartDate, course.FinishDate, course.Note});
+
             return await connection.ExecuteAsync(
-                "INSERT INTO course VALUES(@Course_ID, @Name, @Intake, @Start_date, @Finish_date, @Note)"
-                , new {course.Course_ID, course.Name, course.Intake, course.Start_date, course.Finish_date, course.Note});
+                "INSERT INTO course VALUES(@CourseId, @Name, @Intake, @StartDate, @FinishDate, @Note)"
+                , new {course.CourseId, course.Name, course.Intake, course.StartDate, course.FinishDate, course.Note});
         }
     }
 }

@@ -60,19 +60,25 @@ namespace Dog_school.Database.Repositories
         }
 
         /// <summary>
-        ///     Stores a user instance in the database
+        ///     Saves a user instance in the database
         /// </summary>
-        /// <param name="user">The user to save</param>
+        /// <param name="user">The user to save or update</param>
         /// <returns>The amount of rows affected</returns>
         public static async Task<int> Save(User user)
         {
             // Hash users password before storing in the database
             var hashed = EnhancedHashPassword(user.Password);
-
             var connection = await GetConnection();
+
+            if (user.UserId == null)
+                // Dont pass the user id for auto increment
+                return await connection.ExecuteAsync(
+                    "INSERT INTO user(Email, Password, Name, Address, Zip_code, Phone_number, Admin_permission, Note) VALUES(@Email, @Password, @Name, @Address, @ZipCode, @PhoneNumber, @AdminPermission, @Note)"
+                    , new {user.Email, Password = hashed, user.Name, user.Address, user.ZipCode, user.PhoneNumber, user.AdminPermission, user.Note});
+
             return await connection.ExecuteAsync(
-                "INSERT INTO user VALUES(@User_ID, @Email, @Password, @Name, @Address, @Zip_code, @Phone_number, @Admin_permission, @Note)"
-                , new {user.User_ID, user.Email, Password = hashed, user.Name, user.Address, user.Zip_code, user.Phone_number, user.Admin_permission, user.Note});
+                "REPLACE INTO user VALUES(@UserId, @Email, @Password, @Name, @Address, @ZipCode, @PhoneNumber, @AdminPermission, @Note)"
+                , new {user.UserId, user.Email, Password = hashed, user.Name, user.Address, user.ZipCode, user.PhoneNumber, user.AdminPermission, user.Note});
         }
     }
 }

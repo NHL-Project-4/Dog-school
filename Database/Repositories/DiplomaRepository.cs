@@ -35,16 +35,23 @@ namespace Dog_school.Database.Repositories
         }
 
         /// <summary>
-        ///     Stores a diploma instance in the database
+        ///     Saves a diploma instance in the database
         /// </summary>
-        /// <param name="data">The diploma to save</param>
+        /// <param name="diploma">The diploma to save or update</param>
         /// <returns>The amount of rows affected</returns>
-        public static async Task<int> Save(Diploma data)
+        public static async Task<int> Save(Diploma diploma)
         {
             var connection = await GetConnection();
+
+            if (diploma.DiplomaId == null)
+                // Dont pass the diploma id for auto increment
+                return await connection.ExecuteAsync(
+                    "INSERT INTO diploma(Dog_ID, Date_of_exam, Note) VALUES(@DogId, @DateOfExam, @Note)"
+                    , new {diploma.DogId, diploma.DateOfExam, diploma.Note});
+
             return await connection.ExecuteAsync(
-                "INSERT INTO diploma VALUES(@Diploma_ID, @Dog_ID, @Date_of_exam, @Note)"
-                , new {data.Diploma_ID, data.Dog_ID, data.Date_of_exam, data.Note});
+                "INSERT INTO diploma VALUES(@DiplomaId, @DogId, @DateOfExam, @Note)"
+                , new {diploma.DiplomaId, diploma.DogId, diploma.DateOfExam, diploma.Note});
         }
     }
 }

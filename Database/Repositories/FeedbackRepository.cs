@@ -35,16 +35,23 @@ namespace Dog_school.Database.Repositories
         }
 
         /// <summary>
-        ///     Stores a feedback instance in the database
+        ///     Saves a feedback instance in the database
         /// </summary>
-        /// <param name="feedback">The feedback to save</param>
+        /// <param name="feedback">The feedback to save or update</param>
         /// <returns>The amount of rows affected</returns>
         public static async Task<int> Save(Feedback feedback)
         {
             var connection = await GetConnection();
+
+            if (feedback.LessonId == null)
+                // Dont pass the lesson id for auto increment
+                return await connection.ExecuteAsync(
+                    "INSERT INTO feedback(User_ID, Note) VALUES(@UserId, @Note)"
+                    , new {feedback.UserId, feedback.Note});
+
             return await connection.ExecuteAsync(
-                "INSERT INTO feedback VALUES(@Lesson_ID, @User_ID, @Note)"
-                , new {feedback.Lesson_ID, feedback.User_ID, feedback.Note});
+                "INSERT INTO feedback VALUES(@LessonId, @UserId, @Note)"
+                , new {feedback.LessonId, feedback.UserId, feedback.Note});
         }
     }
 }

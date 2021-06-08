@@ -34,16 +34,23 @@ namespace Dog_school.Database.Repositories
         }
 
         /// <summary>
-        ///     Stores a dog instance in the database
+        ///     Saves a dog instance in the database
         /// </summary>
-        /// <param name="dog">The dog to save</param>
+        /// <param name="dog">The dog to save or update</param>
         /// <returns>The amount of rows affected</returns>
         public static async Task<int> Save(Dog dog)
         {
             var connection = await GetConnection();
+
+            if (dog.DogId == null)
+                // Dont pass the dog id for auto increment
+                return await connection.ExecuteAsync(
+                    "INSERT INTO dog(User_ID, Name, Breed, Date_of_birth, Date_of_death, Gender, Photo, Note) VALUES(@UserId, @Name, @Breed, @DateOfBirth, @DateOfDeath, @Gender, @Photo, @Note)"
+                    , new {dog.UserId, dog.Name, dog.Breed, dog.DateOfBirth, dog.DateOfDeath, dog.Gender, dog.Photo, dog.Note});
+
             return await connection.ExecuteAsync(
-                "INSERT INTO dog VALUES(@Dog_ID, @User_ID, @Name, @Breed, @Date_of_birth, @Date_of_death. @Gender, @Photo, @Note)"
-                , new {dog.Dog_ID, dog.User_ID, dog.Name, dog.Breed, dog.Date_of_birth, dog.Date_of_death, dog.Gender, dog.Photo, dog.Note});
+                "INSERT INTO dog VALUES(@DogId, @UserId, @Name, @Breed, @DateOfBirth, @DateOfDeath, @Gender, @Photo, @Note)"
+                , new {dog.DogId, dog.UserId, dog.Name, dog.Breed, dog.DateOfBirth, dog.DateOfDeath, dog.Gender, dog.Photo, dog.Note});
         }
     }
 }
