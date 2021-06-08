@@ -43,15 +43,11 @@ namespace Dog_school.Database.Repositories
         {
             var connection = await GetConnection();
 
-            if (feedback.LessonId == null)
-                // Dont pass the lesson id for auto increment
-                return await connection.ExecuteAsync(
-                    "INSERT INTO feedback(User_ID, Note) VALUES(@UserId, @Note)"
-                    , new {feedback.UserId, feedback.Note});
-
-            return await connection.ExecuteAsync(
-                "INSERT INTO feedback VALUES(@LessonId, @UserId, @Note)"
-                , new {feedback.LessonId, feedback.UserId, feedback.Note});
+            // Insert or update
+            return await connection.ExecuteAsync(feedback.Lesson_ID == null
+                    ? "INSERT INTO feedback(User_ID, Note) VALUES(@UserId, @Note)"
+                    : "UPDATE feedback SET User_ID = @UserId, Note = @Note WHERE Lesson_ID = @LessonId"
+                , new {LessonId = feedback.Lesson_ID, UserId = feedback.User_ID, feedback.Note});
         }
     }
 }

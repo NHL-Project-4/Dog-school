@@ -42,15 +42,11 @@ namespace Dog_school.Database.Repositories
         {
             var connection = await GetConnection();
 
-            if (dog.DogId == null)
-                // Dont pass the dog id for auto increment
-                return await connection.ExecuteAsync(
-                    "INSERT INTO dog(User_ID, Name, Breed, Date_of_birth, Date_of_death, Gender, Photo, Note) VALUES(@UserId, @Name, @Breed, @DateOfBirth, @DateOfDeath, @Gender, @Photo, @Note)"
-                    , new {dog.UserId, dog.Name, dog.Breed, dog.DateOfBirth, dog.DateOfDeath, dog.Gender, dog.Photo, dog.Note});
-
-            return await connection.ExecuteAsync(
-                "INSERT INTO dog VALUES(@DogId, @UserId, @Name, @Breed, @DateOfBirth, @DateOfDeath, @Gender, @Photo, @Note)"
-                , new {dog.DogId, dog.UserId, dog.Name, dog.Breed, dog.DateOfBirth, dog.DateOfDeath, dog.Gender, dog.Photo, dog.Note});
+            // Insert or update
+            return await connection.ExecuteAsync(dog.Dog_ID == null
+                    ? "INSERT INTO dog(User_ID, Name, Breed, Date_of_birth, Date_of_death, Gender, Photo, Note) VALUES(@UserId, @Name, @Breed, @DateOfBirth, @DateOfDeath, @Gender, @Photo, @Note)"
+                    : "UPDATE dog SET User_ID = @UserId, Name = @Name, Breed = @Breed, Date_of_birth = @DateOfBirth, Date_of_death = @DateOfDeath, Gender = @Gender, Photo = @Photo, Note = @Note WHERE Dog_ID = @DogId"
+                , new {DogId = dog.Dog_ID, UserId = dog.User_ID, dog.Name, dog.Breed, DateOfBirth = dog.Date_of_birth, DateOfDeath = dog.Date_of_death, dog.Gender, dog.Photo, dog.Note});
         }
     }
 }

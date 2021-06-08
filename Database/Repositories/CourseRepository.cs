@@ -29,15 +29,11 @@ namespace Dog_school.Database.Repositories
         {
             var connection = await GetConnection();
 
-            if (course.CourseId == null)
-                // Dont pass the course id for auto increment
-                return await connection.ExecuteAsync(
-                    "INSERT INTO course(Name, Intake, Start_date, Finish_date, Note) VALUES(@Name, @Intake, @StartDate, @FinishDate, @Note)"
-                    , new {course.Name, course.Intake, course.StartDate, course.FinishDate, course.Note});
-
-            return await connection.ExecuteAsync(
-                "INSERT INTO course VALUES(@CourseId, @Name, @Intake, @StartDate, @FinishDate, @Note)"
-                , new {course.CourseId, course.Name, course.Intake, course.StartDate, course.FinishDate, course.Note});
+            // Insert or update
+            return await connection.ExecuteAsync(course.Course_ID == null
+                    ? "INSERT INTO course(Name, Intake, Start_date, Finish_date, Note) VALUES(@Name, @Intake, @StartDate, @FinishDate, @Note)"
+                    : "UPDATE course SET Name = @Name, Intake = @Intake, Start_date = @StartDate, Finish_date = @FinishDate, Note = @Note WHERE Course_ID = @CourseId"
+                , new {CourseId = course.Course_ID, course.Name, course.Intake, StartDate = course.Start_date, FinishDate = course.Finish_date, course.Note});
         }
     }
 }

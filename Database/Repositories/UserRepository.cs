@@ -66,19 +66,13 @@ namespace Dog_school.Database.Repositories
         /// <returns>The amount of rows affected</returns>
         public static async Task<int> Save(User user)
         {
-            // Hash users password before storing in the database
-            var hashed = EnhancedHashPassword(user.Password);
             var connection = await GetConnection();
 
-            if (user.UserId == null)
-                // Dont pass the user id for auto increment
-                return await connection.ExecuteAsync(
-                    "INSERT INTO user(Email, Password, Name, Address, Zip_code, Phone_number, Admin_permission, Note) VALUES(@Email, @Password, @Name, @Address, @ZipCode, @PhoneNumber, @AdminPermission, @Note)"
-                    , new {user.Email, Password = hashed, user.Name, user.Address, user.ZipCode, user.PhoneNumber, user.AdminPermission, user.Note});
-
-            return await connection.ExecuteAsync(
-                "REPLACE INTO user VALUES(@UserId, @Email, @Password, @Name, @Address, @ZipCode, @PhoneNumber, @AdminPermission, @Note)"
-                , new {user.UserId, user.Email, Password = hashed, user.Name, user.Address, user.ZipCode, user.PhoneNumber, user.AdminPermission, user.Note});
+            // Insert or update
+            return await connection.ExecuteAsync(user.User_ID == null
+                    ? "INSERT INTO user(Email, Password, Name, Address, Zip_code, Phone_number, Admin_permission, Note) VALUES(@Email, @Password, @Name, @Address, @ZipCode, @PhoneNumber, @AdminPermission, @Note)"
+                    : "UPDATE user SET Email = @Email, Password = @Password, Name = @Name, Address = @Address, Zip_code = @ZipCode, Phone_number = @PhoneNumber, Admin_permission = @AdminPermission, Note = @Note WHERE User_ID = @UserId"
+                , new {UserId = user.User_ID, user.Email, user.Password, user.Name, user.Address, ZipCode = user.Zip_code, PhoneNumber = user.Phone_number, AdminPermission = user.Admin_permission, user.Note});
         }
     }
 }

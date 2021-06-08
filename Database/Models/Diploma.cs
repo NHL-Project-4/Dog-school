@@ -4,9 +4,9 @@ namespace Dog_school.Database.Models
 {
     public class Diploma
     {
-        public int? DiplomaId { get; set; }
-        public int DogId { get; set; }
-        public DateTime DateOfExam { get; set; }
+        public int? Diploma_ID { get; set; }
+        public int Dog_ID { get; set; }
+        public DateTime Date_of_exam { get; set; }
         public string Note { get; set; }
     }
 }

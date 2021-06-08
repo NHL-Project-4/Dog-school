@@ -43,15 +43,11 @@ namespace Dog_school.Database.Repositories
         {
             var connection = await GetConnection();
 
-            if (diploma.DiplomaId == null)
-                // Dont pass the diploma id for auto increment
-                return await connection.ExecuteAsync(
-                    "INSERT INTO diploma(Dog_ID, Date_of_exam, Note) VALUES(@DogId, @DateOfExam, @Note)"
-                    , new {diploma.DogId, diploma.DateOfExam, diploma.Note});
-
-            return await connection.ExecuteAsync(
-                "INSERT INTO diploma VALUES(@DiplomaId, @DogId, @DateOfExam, @Note)"
-                , new {diploma.DiplomaId, diploma.DogId, diploma.DateOfExam, diploma.Note});
+            // Insert or update
+            return await connection.ExecuteAsync(diploma.Diploma_ID == null
+                    ? "INSERT INTO diploma(Dog_ID, Date_of_exam, Note) VALUES(@DogId, @DateOfExam, @Note)"
+                    : "UPDATE diploma SET Dog_ID = @DogId, Date_of_exam = @DateOfExam, Note = @Note WHERE Diploma_ID = @DiplomaId"
+                , new {DiplomaId = diploma.Diploma_ID, DogId = diploma.Dog_ID, DateOfExam = diploma.Date_of_exam, diploma.Note});
         }
     }
 }

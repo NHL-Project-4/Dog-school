@@ -4,13 +4,13 @@ namespace Dog_school.Database.Models
 {
     public class Dog
     {
-        public int? DogId { get; set; }
-        public int UserId { get; set; }
+        public int? Dog_ID { get; set; }
+        public int User_ID { get; set; }
         public string Name { get; set; }
         public string Breed { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public DateTime Date_of_birth { get; set; }
 
-        public DateTime DateOfDeath { get; set; }
+        public DateTime Date_of_death { get; set; }
 
         public Gender Gender { get; set; }
         public byte[] Photo { get; set; }
