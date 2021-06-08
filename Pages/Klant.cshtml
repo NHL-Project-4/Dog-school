@@ -6,25 +6,73 @@
     ViewData["Title"] = "Klant Pagina";
 }
 
-<style>
+<style xmlns="http://www.w3.org/1999/html">
     #navLinks{opacity: 0;}
     #logoutbtn{opacity: 1;}
     .orangebold{color: #fd7e14;font-weight: bolder}
+    .floaty{float: left;}
+    .noMargin{margin: 0;}
+    .noPadding{padding:0;}
+    .dogPic{
+        float: left;
+        background-color: black;
+        background-image: url('https://hulpmethuisdier.nl/wp-content/uploads/Samojeed-Fokker-Pup-Kopen.jpg');
+       /* background-image: url("/images/dog1.jpg");*/
+        width: 250px;
+        height: 200px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        border-radius: 25px;
+    }
     
 </style>
 <div class="row">
     <div id="klantInfo" class="col-4">
-        <h1 class="orangebold">Naam Klant</h1>
+        <div class="col-12 noPadding " style="margin-bottom:25px">
+            <h1 class="orangebold floaty noPadding col-10">Naam Klant</h1>
+            <button class="col-2" onclick="hideit()" style="border: none;background-color: white">
+                <img alt="edit" width="80%" src="images/baseline_create_black_24dp.png">
+            </button>
+        </div>
+        <script>
+        function hideit () {
+          // HIDE
+          document.getElementById("klantInfo").style.display = "none";
+          // SHOW
+          document.getElementById("klanteditInfo").style.display = "";
+        }
+        </script>
         <p>Adres</p>
         <p>Postcode en Woonplaats</p>
         <p>Telefoonnummer</p>
         <p>E-mailadres</p>
     </div>
+    <div id="klanteditInfo" class="col-4" style="display: none">
+        <h1 class="orangebold">Naam Klant</h1>
+        <form class="col-12" method="post">
+            <input type="text" class="form-control" id="pwp" value="Adres"/><br>
+            <input type="text" class="form-control" id="adres" value="PostCode en Woonplaats"/><br>
+            <input type="text" class="form-control" id="tel" value="Telefoonnummer"/><br>
+            <input type="text" class="form-control" id="email" value="E-mail"/><br>
+            <button type="submit" onclick="reversehideit()">Save</button>
+            <script>
+                function reversehideit () {
+                  // HIDE
+                  document.getElementById("klantInfo").style.display = "";
+                  // SHOW
+                  document.getElementById("klanteditInfo").style.display = "none";
+                }
+            </script>
+        </form>
+
+    </div>
     <div id="hondInfo" class="col-8">
         <div id="hond1" class="col-12" style="margin: 3%; height: 250px;">
             <h2 class="orangebold">Naam Hond</h2>
-            <img class="col-4" src="images/dog3.jpg" alt="logo" width="100%" style="float: left">
-
+            @*<img class="col-4" src="images/dog3.jpg" alt="logo" width="100%" style="float: left">
+            *@
+            <div class="col-4 dogPic" style="width: 250px; height: 200px;"></div>
             <div class="col-4" style="float: left">
                 <h3 class="orangebold">Afgeronde Lessen</h3>
                 <p>Puppycursus Les 1: 20-5-2021</p>
@@ -36,7 +84,8 @@
         </div>
         <div id="hond2" class="col-12" style="margin: 3%; height: 250px;">
             <h2 class="orangebold">Naam Hond</h2>
-            <img class="col-4" src="images/dog1.jpg" alt="logo" width="100%" style="float: left">
+            @*<img class="col-4" src="images/dog1.jpg" alt="logo" width="100%" style="float: left">*@
+            <div class="col-4 dogPic" style="width: 250px; height: 200px;"></div>
 
             <div class="col-4" style="float: left">
                 <h3 class="orangebold">Afgeronde Lessen</h3>
