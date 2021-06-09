@@ -21,6 +21,8 @@ namespace Dog_school.Pages
 
         public void OnGet()
         {
+            // Clear session when redirected to this page
+            HttpContext.Session.Clear();
         }
 
         public async Task<IActionResult> OnPostLogin()
@@ -32,9 +34,8 @@ namespace Dog_school.Pages
             LogUser = await UserRepository.GetUser(LogUser.Name, LogUser.Password);
             if (LogUser?.User_ID == null) return Page();
 
-            // Store user id and username in session
+            // Store user id in session
             HttpContext.Session.SetInt32("UserID", (int) LogUser.User_ID);
-            HttpContext.Session.SetString("Username", LogUser.Name);
             return RedirectToPage(LogUser.Admin_permission ? "Admin" : "Klant");
         }
     }

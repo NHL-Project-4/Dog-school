@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>@ViewData["Title"] - Dog_school</title>
+    <title>@ViewData["Title"] - Dog school</title>
     <link rel="shortcut icon" type="image/jpg" href="favicon.jpg"/>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css"/>
@@ -17,7 +17,7 @@
             @*<a class="nav-link text-light" asp-area="" asp-page="/">Les aan klant koppelen</a>*@
             <a class="nav-link text-light" asp-area="" asp-page="/CursussenBeheren">Cursussen beheren</a>
         </div>
-        <button id="logoutbtn" asp-page="./Index" style="border:none;border-radius: 10px; color: #fd7e14;font-weight: bold;padding: 3px">Log uit</button>
+        <button id="logoutbtn" onclick="window.location.href='./Index'" asp-page="./Index" style="border:none;border-radius: 10px; color: #fd7e14;font-weight: bold;padding: 3px">Log uit</button>
     </nav>
 </header>
 
