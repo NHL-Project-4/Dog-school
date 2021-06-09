@@ -10,10 +10,10 @@ namespace Dog_school.Pages
     {
         public async Task<IActionResult> OnGet()
         {
-            // Redirect to login page if userId is invalid
+            // Redirect to login page if userId is invalid or user isn't an admin
             var id = HttpContext.Session.GetInt32("UserID");
             var user = await UserRepository.GetUser(id);
-            if (user == null) return RedirectToPage("Index");
+            if (user is not {Admin_permission: true}) return RedirectToPage("Index");
 
             // Store username in ViewData
             ViewData["name"] = user.Name;

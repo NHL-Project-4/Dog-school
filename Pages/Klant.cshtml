@@ -27,10 +27,12 @@
     }
     
 </style>
+
+@* TODO: Reformat code *@
 <div class="row">
     <div id="klantInfo" class="col-4">
         <div class="col-12 noPadding " style="margin-bottom:25px">
-            <h1 class="orangebold floaty noPadding col-10">Naam Klant</h1>
+            <h1 class="orangebold floaty noPadding col-10">@ViewData["name"]</h1>
             <button class="col-2" onclick="hideit()" style="border: none;background-color: white">
                 <img alt="edit" width="80%" src="images/baseline_create_black_24dp.png">
             </button>
@@ -43,10 +45,10 @@
           document.getElementById("klanteditInfo").style.display = "";
         }
         </script>
-        <p>Adres</p>
-        <p>Postcode en Woonplaats</p>
-        <p>Telefoonnummer</p>
-        <p>E-mailadres</p>
+        <p>@ViewData["address"]</p>
+        <p>@ViewData["zip code"]</p>
+        <p>@ViewData["phone number"]</p>
+        <p>@ViewData["email"]</p>
     </div>
     <div id="klanteditInfo" class="col-4" style="display: none">
         <h1 class="orangebold">Naam Klant</h1>
@@ -97,5 +99,4 @@
             </div>
         </div>
     </div>
-
 </div>
