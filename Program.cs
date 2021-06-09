@@ -30,8 +30,8 @@ namespace Dog_school
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
-                options.Cookie.Name = "sessionID";
+                options.IdleTimeout = TimeSpan.FromHours(8);
+                options.Cookie.Name = "SessionID";
             });
 
             // Some anti forgery stuff needed to keep the session safe.

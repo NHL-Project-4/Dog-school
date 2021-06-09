@@ -49,6 +49,25 @@ namespace Dog_school.Database.Repositories
         }
 
         /// <summary>
+        ///     Attempts to find a user with the specified userId
+        /// </summary>
+        /// <param name="id">The user id to search for</param>
+        /// <returns>The user with a matching userId, or null if not found</returns>
+        public static async Task<User?> GetUser(int? id)
+        {
+            // Return null if the specified id is null
+            if (id == null) return null;
+
+            // Open connection and execute query
+            var connection = await GetConnection();
+            var result =
+                await connection.QueryAsync<User>("SELECT * FROM user WHERE User_ID = @userId", new {userId = id});
+
+            // Get the first user with a matching user id, or null if not found
+            return result.FirstOrDefault();
+        }
+
+        /// <summary>
         ///     Deletes the specified user
         /// </summary>
         /// <param name="userId">The id of the user to delete</param>

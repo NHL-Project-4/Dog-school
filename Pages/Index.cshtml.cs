@@ -1,6 +1,4 @@
-﻿using System.Security.Claims;
-using System.Security.Principal;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Dog_school.Database.Models;
 using Dog_school.Database.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -23,35 +21,21 @@ namespace Dog_school.Pages
 
         public void OnGet()
         {
-            //example
-            HttpContext.Session.SetInt32("DataName", 1);
-            ViewData["Name"] = HttpContext.Session.GetInt32("DataName");
-            var ass = (int) ViewData["Name"];
         }
 
         public async Task<IActionResult> OnPostLogin()
         {
-            LogUser = await UserRepository.GetUser(LogUser.Name, LogUser.Password);
-            if (LogUser == null)
-                // TODO: Impl
-                return new PageResult();
+            // Redirect to page if no user was specified
+            if (LogUser == null) return Page();
 
-            //if both are right
-            string[] roles = {LogUser.Admin_permission.ToString(), LogUser.User_ID.ToString()};
-            GenericPrincipal user = new(new ClaimsIdentity(LogUser.Name), roles);
-            HttpContext.User = user;
+            // Redirect to page if credentials were invalid
+            LogUser = await UserRepository.GetUser(LogUser.Name, LogUser.Password);
+            if (LogUser?.User_ID == null) return Page();
+
+            // Store user id and username in session
+            HttpContext.Session.SetInt32("UserID", (int) LogUser.User_ID);
+            HttpContext.Session.SetString("Username", LogUser.Name);
             return RedirectToPage(LogUser.Admin_permission ? "Admin" : "Klant");
         }
     }
 }
-
-//to get the data always use viewdata as this:
-//    ViewData["Name"] = HttpContext.Session.GetInt32("DataName");
-
-//you can use viewdata like this:
-//    (int)ViewData["Name"]
-//to get that data into an int. other data types can be used aswell.
-//i tried just using int to get the sessiondata but it contains some other data aswel leading to errors so just use viewdata.
-
-//to set the data in the session use:
-//    HttpContext.Session.SetInt32("DataName", int);
