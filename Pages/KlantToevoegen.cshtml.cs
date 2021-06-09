@@ -26,7 +26,7 @@ namespace Dog_school.Pages
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(address) ||
                 string.IsNullOrWhiteSpace(postalCode) || string.IsNullOrWhiteSpace(phoneNumber) ||
                 string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(note) ||
-                HttpContext.Session.GetInt32("UserID") == null) return RedirectToPage("Index");
+                HttpContext.Session.GetInt32("UserID") == null) return RedirectToPage("KlantToevoegen");
 
             // Create account instance based on input
             var account = new User

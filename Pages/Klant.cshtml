@@ -26,50 +26,45 @@
         background-size: cover;
         border-radius: 25px;
     }
-    
 </style>
+
+<script>
+function editCustomer(state) {
+    document.getElementById("customerInfo").hidden = state
+    document.getElementById("customerEdit").hidden = !state
+}
+</script>
 
 @* TODO: Reformat code *@
 <div class="row">
-    <div id="klantInfo" class="col-4">
+    <div id="customerInfo" class="col-4">
         <div class="col-12 noPadding " style="margin-bottom:25px">
             <h1 class="orangebold floaty noPadding col-10">@ViewData["name"]</h1>
-            <button class="col-2" onclick="hideit()" style="border: none;background-color: white">
+            <button class="col-2" onclick="editCustomer(true)" style="border: none;background-color: white">
                 <img alt="edit" width="80%" src="images/baseline_create_black_24dp.png">
             </button>
         </div>
-        <script>
-        function hideit () {
-          // HIDE
-          document.getElementById("klantInfo").style.display = "none";
-          // SHOW
-          document.getElementById("klanteditInfo").style.display = "";
-        }
-        </script>
+
         <p>@ViewData["address"]</p>
         <p>@ViewData["zip code"]</p>
         <p>@ViewData["phone number"]</p>
         <p>@ViewData["email"]</p>
     </div>
-    <div id="klanteditInfo" class="col-4" style="display: none">
-        <h1 class="orangebold">Naam Klant</h1>
-        <form class="col-12" method="post">
-            <input type="text" class="form-control" id="pwp" value="Adres"/><br>
-            <input type="text" class="form-control" id="adres" value="PostCode en Woonplaats"/><br>
-            <input type="text" class="form-control" id="tel" value="Telefoonnummer"/><br>
-            <input type="text" class="form-control" id="email" value="E-mail"/><br>
-            <button type="submit" onclick="reversehideit()">Save</button>
-            <script>
-                function reversehideit () {
-                  // HIDE
-                  document.getElementById("klantInfo").style.display = "";
-                  // SHOW
-                  document.getElementById("klanteditInfo").style.display = "none";
-                }
-            </script>
-        </form>
 
+    <div id="customerEdit" class="col-4" hidden>
+        <h1 class="orangebold">@ViewData["name"]</h1>
+
+        <form class="col-12" method="post">
+            <input type="text" class="form-control" name="address" id="address" placeholder="@ViewData["address"]"/><br>
+            <input type="text" class="form-control" name="postalCode" id="postalCode" placeholder="@ViewData["zip code"]"/><br>
+            <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="@ViewData["phone number"]" pattern="^(\+31( |)|)((0\d|1\d|\d)\d{2})(( |)\d{2}){3}$"/><br>
+            <input type="text" class="form-control" name="email" id="email" placeholder="@ViewData["email"]" pattern="^[^@@\s]{1,64}@@[^@@\s]{1,64}\.[^@@\s]{1,64}$"/><br>
+            <input type="password" class="form-control" name="password" id="password" placeholder="Password"/><br>
+            <button asp-page-handler="UpdateCustomer" type="submit">Save</button>
+            <button type="reset" onclick="editCustomer(false)">Cancel</button>
+        </form>
     </div>
+
     <div id="hondInfo" class="col-8">
         @foreach (var dog in (ViewData["dogs"] as List<Dog>)!)
         {

@@ -28,5 +28,28 @@ namespace Dog_school.Pages
             ViewData["dogs"] = dogs.ToList();
             return Page();
         }
+
+        public async Task<IActionResult> OnPostUpdateCustomer([FromForm] string address, [FromForm] string postalCode,
+            [FromForm] string phoneNumber, [FromForm] string email, [FromForm] string password)
+        {
+            // Check if user id is valid
+            var id = HttpContext.Session.GetInt32("UserID");
+            if (HttpContext.Session.GetInt32("UserID") == null) return RedirectToPage("Klant");
+
+            // Get user from id
+            var user = await UserRepository.GetUser(id);
+            if (user == null) return RedirectToPage("Klant");
+
+            // Update user data
+            if (!string.IsNullOrWhiteSpace(address)) user.Address = address;
+            if (!string.IsNullOrWhiteSpace(postalCode)) user.Zip_code = postalCode;
+            if (!string.IsNullOrWhiteSpace(phoneNumber)) user.Phone_number = phoneNumber;
+            if (!string.IsNullOrWhiteSpace(email)) user.Email = email;
+            if (!string.IsNullOrWhiteSpace(password)) user.SetPassword(password);
+
+            // Save updated account in database
+            await UserRepository.Save(user);
+            return RedirectToPage("Klant");
+        }
     }
 }
