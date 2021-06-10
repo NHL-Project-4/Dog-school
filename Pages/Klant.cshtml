@@ -35,7 +35,6 @@ function editCustomer(state) {
 }
 </script>
 
-@* TODO: Reformat code *@
 <div class="row">
     <div id="customerInfo" class="col-4">
         <div class="col-12 noPadding " style="margin-bottom:25px">
@@ -65,6 +64,7 @@ function editCustomer(state) {
         </form>
     </div>
 
+    @* TODO: Add dogs with courses *@
     <div id="hondInfo" class="col-8">
         @foreach (var dog in (ViewData["dogs"] as List<Dog>)!)
         {

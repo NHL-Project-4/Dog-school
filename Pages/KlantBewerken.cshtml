@@ -54,40 +54,47 @@
             </form>
         </div>
 
-        @* *@
-        @* <div class="col-4 floaty"> *@
-        @*     <h4 class="orangebold" style="margin:3%">Gegevens Hond</h4> *@
-        @*     <div id="hond1" class="col-12" style="border: 1px solid lightgrey; border-radius: 20px; min-height: 200px;padding-right: 0;"> *@
-        @*         <div class="col=10 hondI"> *@
-        @*             <h5 class="orangebold">Naam Hond</h5> *@
-        @*             <p class="noMargin">Ras Hond</p> *@
-        @*             <p class="noMargin">Geboorte datum</p> *@
-        @*             <p class="noMargin">Geslacht</p> *@
-        @*             <p class="noMargin">Cursussen</p> *@
-        @*             <p class="noMargin">Opmerking</p> *@
-        @*         </div> *@
-        @*         @*<div class="badge noMargin" > *@
-        @*         <img src="images/baseline_military_tech_black_24dp.png" width="100%" height="100%"> *@
-        @*     </div>*@
-        @*     </div> *@
-        @* *@
-
         <div class="col-4 floaty">
             <h4 class="orangebold" style="margin:3%">Nieuwe Hond toevoegen</h4>
 
             <form method="post">
-                <input type="text" class="form-control" name="naam" placeholder="Naam Hond"><br>
-                <input type="text" class="form-control" name="ras" placeholder="Ras Hond"><br>
-                <input type="date" class="form-control" name="geboortedatum" placeholder="Geboorte Datum"><br>
-                <input type="text" class="form-control" name="geslacht" placeholder="Geslacht"><br>
-                <input type="text" class="form-control" name="opmerking" placeholder="Opmerking"><br>
-                <select id="cursussen" class="form-control" name="cursussen">
+                <input type="hidden" class="form-control" name="id" id="id" value="@ViewData["id"]"><br>
+                <input type="text" class="form-control" name="name" id="name" placeholder="Naam Hond"><br>
+                <input type="text" class="form-control" name="breed" id="breed" placeholder="Ras Hond"><br>
+                <input type="date" class="form-control" name="birthday" id="birthday" placeholder="Geboorte Datum"><br>
+
+                @* TODO: Replace with select *@
+                <input type="text" class="form-control" name="gender" id="gender" placeholder="Geslacht"><br>
+                <input type="text" class="form-control" name="note" id="note" placeholder="Opmerking"><br>
+
+                <select class="form-control" name="course" id="course">
+                    @* TODO: Courses *@
                     <option value="puppyCursusM">Puppy cursus (Maandag)</option>
                     <option value="puppyCursusDi">Puppy cursus (Dinsdag)</option>
                     <option value="bewustSamenwerkenAW">Bewust Samenwerken A (Woensdag)</option>
                 </select><br>
-                <button class="OrangeButton" type="submit" asp-page="">Voeg hond toe</button>
+                <button class="OrangeButton" type="submit" asp-page-handler="DogCreate">Voeg hond toe</button>
+                <button class="OrangeButton" type="reset">Annuleren</button>
             </form>
+        </div>
+
+        @* TODO: Add dogs with foreach *@
+        <div class="col-4 floaty">
+            <h4 class="orangebold" style="margin:3%">Gegevens Hond</h4>
+
+            <div id="hond1" class="col-12" style="border: 1px solid lightgrey; border-radius: 20px; min-height: 200px;padding-right: 0;">
+                <div class="col=10 hondI">
+                    <h5 class="orangebold">Naam Hond</h5>
+                    <p class="noMargin">Ras Hond</p>
+                    <p class="noMargin">Geboorte datum</p>
+                    <p class="noMargin">Geslacht</p>
+                    <p class="noMargin">Cursussen</p>
+                    <p class="noMargin">Opmerking</p>
+                </div>
+
+                @* <div class="badge noMargin" > *@
+                @* <img src="images/baseline_military_tech_black_24dp.png" width="100%" height="100%"> *@
+            </div>
         </div>
     }
 </div>

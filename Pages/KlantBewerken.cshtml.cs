@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Dog_school.Database.Models;
 using Dog_school.Database.Repositories;
 using Dog_school.Utils;
 using Microsoft.AspNetCore.Mvc;
@@ -56,6 +58,41 @@ namespace Dog_school.Pages
 
             // Save updated account in database
             await UserRepository.Save(user);
+            return await OnGetAsync(id);
+        }
+
+        public async Task<IActionResult> OnPostDogCreate([FromForm] int? id, [FromForm] string name,
+            [FromForm] string breed, [FromForm] DateTime birthday, [FromForm] string gender, [FromForm] string note,
+            [FromForm] string course)
+        {
+            // Get user from session
+            var user = await HttpContext.Session.GetUser();
+
+            // Redirect to login page if user is invalid or user is a customer
+            if (user?.Admin_permission != true || id == null) return RedirectToPage("Index");
+
+            // Check if customer to add dog to is valid
+            var customer = await UserRepository.GetUser(id);
+            if (customer == null) return RedirectToPage("Index");
+
+            // Parse input gender to enum, or return if it failed
+            if (!Enum.TryParse<Gender>(gender, true, out var value)) return RedirectToPage("Index");
+
+            // Create dog instance based on input
+            // TODO: Parse course
+            var dog = new Dog
+            {
+                User_ID = (int) id,
+                Name = name,
+                Breed = breed,
+                Date_of_birth = birthday,
+                Date_of_death = null,
+                Gender = value,
+                Note = note
+            };
+
+            // Save newly created dog in database
+            await DogRepository.Save(dog);
             return await OnGetAsync(id);
         }
     }

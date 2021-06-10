@@ -35,7 +35,11 @@ namespace Dog_school.Pages
             // Create account instance based on input
             var account = new User
             {
-                Name = username, Address = address, Zip_code = postalCode, Phone_number = phoneNumber, Email = email,
+                Name = username,
+                Address = address,
+                Zip_code = postalCode,
+                Phone_number = phoneNumber,
+                Email = email,
                 Note = note
             };
 
@@ -44,6 +48,7 @@ namespace Dog_school.Pages
 
             // Save newly created account in database
             await UserRepository.Save(account);
+            // TODO: Redirect to customer edit page
             return Page();
         }
     }
