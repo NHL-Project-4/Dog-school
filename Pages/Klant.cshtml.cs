@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Dog_school.Database.Repositories;
-using Microsoft.AspNetCore.Http;
+using Dog_school.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -9,12 +9,13 @@ namespace Dog_school.Pages
 {
     public class Klant : PageModel
     {
-        public async Task<IActionResult> OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-            // Redirect to login page if userId is invalid or user is an admin
-            var id = HttpContext.Session.GetInt32("UserID");
-            var user = await UserRepository.GetUser(id);
-            if (user == null || user.Admin_permission || user.User_ID == null) return RedirectToPage("Index");
+            // Get user from session
+            var user = await HttpContext.Session.GetUser();
+
+            // Redirect to login page if user is invalid or user is an admin
+            if (user?.Admin_permission != false || user.User_ID == null) return RedirectToPage("Index");
 
             // Store user data in ViewData
             ViewData["name"] = user.Name;
@@ -32,13 +33,11 @@ namespace Dog_school.Pages
         public async Task<IActionResult> OnPostUpdateCustomer([FromForm] string address, [FromForm] string postalCode,
             [FromForm] string phoneNumber, [FromForm] string email, [FromForm] string password)
         {
-            // Check if user id is valid
-            var id = HttpContext.Session.GetInt32("UserID");
-            if (HttpContext.Session.GetInt32("UserID") == null) return RedirectToPage("Klant");
+            // Get user from session
+            var user = await HttpContext.Session.GetUser();
 
-            // Get user from id
-            var user = await UserRepository.GetUser(id);
-            if (user == null) return RedirectToPage("Klant");
+            // Redirect to login page if user is invalid or user is an admin
+            if (user?.Admin_permission != false) return RedirectToPage("Index");
 
             // Update user data
             if (!string.IsNullOrWhiteSpace(address)) user.Address = address;

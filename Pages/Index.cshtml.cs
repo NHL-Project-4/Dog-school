@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Dog_school.Database.Models;
 using Dog_school.Database.Repositories;
-using Microsoft.AspNetCore.Http;
+using Dog_school.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
@@ -35,7 +35,7 @@ namespace Dog_school.Pages
             if (LogUser?.User_ID == null) return Page();
 
             // Store user id in session
-            HttpContext.Session.SetInt32("UserID", (int) LogUser.User_ID);
+            HttpContext.Session.SetUser(LogUser);
             return RedirectToPage(LogUser.Admin_permission ? "Admin" : "Klant");
         }
     }
