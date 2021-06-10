@@ -5,9 +5,9 @@ using Dog_school.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Dog_school.Pages
+namespace Dog_school.Pages.Customer
 {
-    public class Klant : PageModel
+    public class Index : PageModel
     {
         public async Task<IActionResult> OnGetAsync()
         {
@@ -15,7 +15,7 @@ namespace Dog_school.Pages
             var user = await HttpContext.Session.GetUser();
 
             // Redirect to login page if user is invalid or user is an admin
-            if (user?.Admin_permission != false || user.User_ID == null) return RedirectToPage("Index");
+            if (user?.Admin_permission != false || user.User_ID == null) return RedirectToPage("/Index");
 
             // Store user data in ViewData
             ViewData["name"] = user.Name;
@@ -37,7 +37,7 @@ namespace Dog_school.Pages
             var user = await HttpContext.Session.GetUser();
 
             // Redirect to login page if user is invalid or user is an admin
-            if (user?.Admin_permission != false) return RedirectToPage("Index");
+            if (user?.Admin_permission != false) return RedirectToPage("/Index");
 
             // Update user data
             if (!string.IsNullOrWhiteSpace(address)) user.Address = address;
@@ -48,7 +48,7 @@ namespace Dog_school.Pages
 
             // Save updated account in database
             await UserRepository.Save(user);
-            return RedirectToPage("Klant");
+            return RedirectToPage("/Customer/Index");
         }
     }
 }

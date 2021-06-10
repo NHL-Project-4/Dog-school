@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Dog_school.Pages
+namespace Dog_school.Pages.Course
 {
-    public class CursussenBeheren : PageModel
+    public class Index : PageModel
     {
         public void OnGet()
         {

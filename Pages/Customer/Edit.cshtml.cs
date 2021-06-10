@@ -6,9 +6,9 @@ using Dog_school.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Dog_school.Pages
+namespace Dog_school.Pages.Customer
 {
-    public class KlantBewerken : PageModel
+    public class Edit : PageModel
     {
         public async Task<IActionResult> OnGetAsync([FromQuery] int? id)
         {
@@ -16,7 +16,7 @@ namespace Dog_school.Pages
             var user = await HttpContext.Session.GetUser();
 
             // Redirect to login page if user is invalid or user is a customer
-            if (user?.Admin_permission != true) return RedirectToPage("Index");
+            if (user?.Admin_permission != true) return RedirectToPage("/Index");
             var customer = await UserRepository.GetUser(id);
 
             // Set hasData and return if no customer was found
@@ -42,11 +42,11 @@ namespace Dog_school.Pages
             var user = await HttpContext.Session.GetUser();
 
             // Redirect to login page if user is invalid or user is a customer
-            if (user?.Admin_permission != true) return RedirectToPage("Index");
+            if (user?.Admin_permission != true) return RedirectToPage("/Index");
 
             // Check if customer to edit is valid
             var customer = await UserRepository.GetUser(id);
-            if (customer == null) return RedirectToPage("Index");
+            if (customer == null) return RedirectToPage("/Index");
 
             // Update user data
             if (!string.IsNullOrWhiteSpace(username)) user.Name = username;
@@ -69,14 +69,14 @@ namespace Dog_school.Pages
             var user = await HttpContext.Session.GetUser();
 
             // Redirect to login page if user is invalid or user is a customer
-            if (user?.Admin_permission != true || id == null) return RedirectToPage("Index");
+            if (user?.Admin_permission != true || id == null) return RedirectToPage("/Index");
 
             // Check if customer to add dog to is valid
             var customer = await UserRepository.GetUser(id);
-            if (customer == null) return RedirectToPage("Index");
+            if (customer == null) return RedirectToPage("/Index");
 
             // Parse input gender to enum, or return if it failed
-            if (!Enum.TryParse<Gender>(gender, true, out var value)) return RedirectToPage("Index");
+            if (!Enum.TryParse<Gender>(gender, true, out var value)) return RedirectToPage("/Index");
 
             // Create dog instance based on input
             // TODO: Parse course

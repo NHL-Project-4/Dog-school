@@ -4,19 +4,11 @@ using Dog_school.Database.Repositories;
 using Dog_school.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 
 namespace Dog_school.Pages
 {
-    public class IndexModel : PageModel
+    public class Index : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-
-        public IndexModel(ILogger<IndexModel> logger)
-        {
-            _logger = logger;
-        }
-
         [BindProperty] public User? LogUser { get; set; }
 
         public void OnGet()
@@ -36,7 +28,7 @@ namespace Dog_school.Pages
 
             // Store user id in session
             HttpContext.Session.SetUser(LogUser);
-            return RedirectToPage(LogUser.Admin_permission ? "Admin" : "Klant");
+            return RedirectToPage(LogUser.Admin_permission ? "Admin/Index" : "Customer/Index");
         }
     }
 }

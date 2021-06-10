@@ -3,9 +3,9 @@ using Dog_school.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Dog_school.Pages
+namespace Dog_school.Pages.Admin
 {
-    public class Admin : PageModel
+    public class Index : PageModel
     {
         public async Task<IActionResult> OnGetAsync()
         {
@@ -13,7 +13,7 @@ namespace Dog_school.Pages
             var user = await HttpContext.Session.GetUser();
 
             // Redirect to login page if user is invalid or user is a customer
-            if (user?.Admin_permission != true) return RedirectToPage("Index");
+            if (user?.Admin_permission != true) return RedirectToPage("/Index");
 
             // Store username in ViewData
             ViewData["name"] = user.Name;

@@ -5,9 +5,9 @@ using Dog_school.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Dog_school.Pages
+namespace Dog_school.Pages.Customer
 {
-    public class KlantToevoegen : PageModel
+    public class Create : PageModel
     {
         public async Task<IActionResult> OnGetAsync()
         {
@@ -15,7 +15,7 @@ namespace Dog_school.Pages
             var user = await HttpContext.Session.GetUser();
 
             // Redirect to login page if user is invalid or user is a customer
-            if (user?.Admin_permission != true) return RedirectToPage("Index");
+            if (user?.Admin_permission != true) return RedirectToPage("/Index");
             return Page();
         }
 
@@ -26,11 +26,14 @@ namespace Dog_school.Pages
             // Get user from session
             var user = await HttpContext.Session.GetUser();
 
-            // Redirect to login page if the session is invalid
+            // Redirect to login page if user is invalid or user is a customer
+            if (user?.Admin_permission != true) return RedirectToPage("/Index");
+
+            // Redirect to customer create page if all input is empty
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(address) ||
                 string.IsNullOrWhiteSpace(postalCode) || string.IsNullOrWhiteSpace(phoneNumber) ||
-                string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(note) ||
-                user?.Admin_permission != true) return RedirectToPage("KlantToevoegen");
+                string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(note)) return RedirectToPage("/Customer/Create");
 
             // Create account instance based on input
             var account = new User

@@ -4,20 +4,20 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>@ViewData["Title"] - Dog school</title>
-    <link rel="shortcut icon" type="image/jpg" href="favicon.jpg"/>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="~/css/site.css"/>
+    <link rel="shortcut icon" type="image/jpg" href="/favicon.jpg"/>
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/css/site.css"/>
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background: #F26A37">
         <div id="navLinks" class="container">
-            <a class="nav-link text-light" asp-area="" asp-page="/KlantToevoegen">Nieuwe Klant toevoegen</a>
-            <a class="nav-link text-light" asp-area="" asp-page="/KlantBewerken">Klant bewerken</a>
+            <a class="nav-link text-light" asp-area="" asp-page="/Customer/Create">Nieuwe Klant toevoegen</a>
+            <a class="nav-link text-light" asp-area="" asp-page="/Customer/Edit">Klant bewerken</a>
             @*<a class="nav-link text-light" asp-area="" asp-page="/">Les aan klant koppelen</a>*@
-            <a class="nav-link text-light" asp-area="" asp-page="/CursussenBeheren">Cursussen beheren</a>
+            <a class="nav-link text-light" asp-area="" asp-page="/Course/Index">Cursussen beheren</a>
         </div>
-        <button id="logoutbtn" onclick="window.location.href='./Index'" asp-page="./Index" style="border:none;border-radius: 10px; color: #fd7e14;font-weight: bold;padding: 3px">Log uit</button>
+        <button id="logoutbtn" onclick="window.location.href='/Index'" asp-page="/Index" style="border:none;border-radius: 10px; color: #fd7e14;font-weight: bold;padding: 3px">Log uit</button>
     </nav>
 </header>
 
@@ -27,9 +27,9 @@
     </main>
 </div>
 
-<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="/lib/jquery/dist/jquery.min.js"></script>
+<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/site.js" asp-append-version="true"></script>
 
 @await RenderSectionAsync("Scripts", false)
 </body>
