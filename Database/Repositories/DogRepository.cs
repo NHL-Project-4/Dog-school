@@ -25,12 +25,25 @@ namespace Dog_school.Database.Repositories
         /// </summary>
         /// <param name="userId">The user id to search for</param>
         /// <returns>The stored dogs of the specified user</returns>
-        public static async Task<IEnumerable<Dog>> GetDogs(int userId)
+        public static async Task<IEnumerable<Dog>> GetDogs(int? userId)
         {
+            if (userId == null) return new List<Dog>();
+
             var connection = await GetConnection();
             var result =
                 await connection.QueryAsync<Dog>("SELECT * FROM dog WHERE User_ID = @userId", new {userId});
             return result;
+        }
+
+        /// <summary>
+        ///     Removes the specified dog
+        /// </summary>
+        /// <param name="dogId">The id of the dog to remove</param>
+        /// <returns>The amount of rows affected</returns>
+        public static async Task<int> Remove(int dogId)
+        {
+            var connection = await GetConnection();
+            return await connection.ExecuteAsync("DELETE FROM dog WHERE Dog_ID = @dogId", new {dogId});
         }
 
         /// <summary>

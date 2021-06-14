@@ -31,6 +31,9 @@ namespace Dog_school.Pages.Customer
             ViewData["phone number"] = user.Phone_number;
             ViewData["email"] = user.Email;
             ViewData["note"] = user.Note;
+
+            // TODO: Dogs + courses
+            ViewData["dogs"] = await DogRepository.GetDogs(user.User_ID);
             return Page();
         }
 

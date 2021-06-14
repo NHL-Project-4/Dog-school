@@ -68,11 +68,11 @@ namespace Dog_school.Database.Repositories
         }
 
         /// <summary>
-        ///     Deletes the specified user
+        ///     Removes the specified user
         /// </summary>
-        /// <param name="userId">The id of the user to delete</param>
+        /// <param name="userId">The id of the user to remove</param>
         /// <returns>The amount of rows affected</returns>
-        public static async Task<int> DeleteUser(int userId)
+        public static async Task<int> Remove(int userId)
         {
             var connection = await GetConnection();
             return await connection.ExecuteAsync("DELETE FROM user WHERE User_ID = @userId", new {userId});

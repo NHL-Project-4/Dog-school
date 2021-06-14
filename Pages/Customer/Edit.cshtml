@@ -1,4 +1,5 @@
 ﻿@page "{id?}"
+@using Dog_school.Database.Models
 @model Dog_school.Pages.Customer.Edit
 
 @{
@@ -39,7 +40,7 @@
     @if ((bool) ViewData["hasData"])
     {
         <div class="col-4 floaty">
-            <h4 class="orangebold" style="margin:3%">Gegevens Klant</h4>
+            <h4 class="orangebold" style="margin:3%">Gegevens klant</h4>
 
             <form method="post">
                 <input type="hidden" class="form-control" name="id" id="id" value="@ViewData["id"]"><br>
@@ -55,7 +56,7 @@
         </div>
 
         <div class="col-4 floaty">
-            <h4 class="orangebold" style="margin:3%">Nieuwe Hond toevoegen</h4>
+            <h4 class="orangebold" style="margin:3%">Nieuwe hond toevoegen</h4>
 
             <form method="post">
                 <input type="hidden" class="form-control" name="id" id="id" value="@ViewData["id"]"><br>
@@ -78,23 +79,25 @@
             </form>
         </div>
 
-        @* TODO: Add dogs with foreach *@
         <div class="col-4 floaty">
-            <h4 class="orangebold" style="margin:3%">Gegevens Hond</h4>
+            <h4 class="orangebold" style="margin:3%">Gegevens honden</h4>
+            @foreach (var dog in (List<Dog>) ViewData["dogs"])
+            {
+                <div id="hond1" class="col-12" style="border: 1px solid lightgrey; border-radius: 20px; min-height: 200px;padding-right: 0;">
+                    <div class="col=10 hondI">
+                        <h5 class="orangebold">@dog.Name</h5>
+                        <p class="noMargin">@dog.Breed</p>
+                        <p class="noMargin">@dog.Date_of_birth</p>
+                        <p class="noMargin">@dog.Gender</p>
+                        @* TODO: Display courses *@
+                        <p class="noMargin">Cursussen</p>
+                        <p class="noMargin">@dog.Note</p>
+                    </div>
 
-            <div id="hond1" class="col-12" style="border: 1px solid lightgrey; border-radius: 20px; min-height: 200px;padding-right: 0;">
-                <div class="col=10 hondI">
-                    <h5 class="orangebold">Naam Hond</h5>
-                    <p class="noMargin">Ras Hond</p>
-                    <p class="noMargin">Geboorte datum</p>
-                    <p class="noMargin">Geslacht</p>
-                    <p class="noMargin">Cursussen</p>
-                    <p class="noMargin">Opmerking</p>
+                    @* <div class="badge noMargin" > *@
+                    @* <img src="images/baseline_military_tech_black_24dp.png" width="100%" height="100%"> *@
                 </div>
-
-                @* <div class="badge noMargin" > *@
-                @* <img src="images/baseline_military_tech_black_24dp.png" width="100%" height="100%"> *@
-            </div>
+            }
         </div>
     }
 </div>
