@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Dog_school.Database.Models;
 using Dog_school.Database.Repositories;
 using Dog_school.Utils;
@@ -38,21 +39,23 @@ namespace Dog_school.Pages.Customer
             // Create account instance based on input
             var account = new User
             {
-                Name = username,
-                Address = address,
-                Zip_code = postalCode,
-                Phone_number = phoneNumber,
-                Email = email,
+                Name = username, Address = address, Zip_code = postalCode, Phone_number = phoneNumber, Email = email,
                 Note = note
             };
 
-            // Set default password to 'password'
+            // Set default password to 'password' and save newly created account in database
+            // TODO: Ask customer for password, or send one time verify link
             account.SetPassword("password");
-
-            // Save newly created account in database
             await UserRepository.Save(account);
-            // TODO: Redirect to customer edit page
-            return Page();
+
+            // Get user id for redirecting
+            var users = await UserRepository.GetUsers(username);
+            var id = users.SingleOrDefault(temp =>
+                temp.Email == email && temp.Address == address && temp.Zip_code == postalCode && temp.Note == note &&
+                !temp.Admin_permission)?.User_ID;
+
+            // Redirect to customer edit page of the newly created customer
+            return RedirectToPage("/Customer/Edit", new {id});
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Dog_school.Pages.Customer
 {
     public class Edit : PageModel
     {
-        public async Task<IActionResult> OnGetAsync([FromQuery] int? id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
             // Get user from session
             var user = await HttpContext.Session.GetUser();
