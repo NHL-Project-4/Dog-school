@@ -10,6 +10,9 @@ namespace Dog_school
     {
         public static void Main(string[] args)
         {
+            // Load config file and print message
+            Console.WriteLine("Loaded database config, using connect string '{0}'", Database.Database.ConnectString);
+
             // Configure host builder
             var builder = Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(hostBuilder => hostBuilder.UseStartup<Program>());

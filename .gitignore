@@ -5,3 +5,6 @@ obj
 
 # Visual studio files
 .vs
+
+# Config file
+config.json

@@ -8,10 +8,23 @@ namespace Dog_school.Database
     {
         /// <summary>
         ///     String used for connecting to the database
-        ///     TODO: Add config file for login credentials
         /// </summary>
-        private const string ConnectString =
-            "server=127.0.0.1;port=3306;database=hondenschool;uid=root;pwd=Test@1234!;";
+        public static readonly string? ConnectString;
+
+        static Database()
+        {
+            // Deserialize config
+            var config = Config.Deserialize("config.json");
+            ConnectString = config?.GetConnectString();
+            if (config != null) return;
+
+            // Generate config file
+            Config.Generate("config.json");
+            Console.WriteLine("Generated config file!");
+
+            // Shut down application
+            Environment.Exit(0);
+        }
 
         /// <summary>
         ///     Gets an open MySqlConnection connected to the database
