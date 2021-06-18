@@ -40,7 +40,7 @@
 
     @if ((bool) ViewData["hasData"])
     {
-        <div class="col-4 floaty">
+        <div class="col-4 floaty" style="margin-top:5px; margin-bottom: 5px;">
             <h4 class="orangebold" style="margin:3%">Gegevens klant</h4>
 
             <form method="post">
@@ -89,13 +89,13 @@
             <h4 class="orangebold" style="margin:3%">Gegevens honden</h4>
             @foreach (var dog in dogs!.Keys)
             {
-                <div id="hond1" class="col-12" style="border: 1px solid lightgrey; border-radius: 20px; min-height: 200px;padding-right: 0;">
+                <div class="col-12" style="border: 1px solid lightgrey; border-radius: 20px; min-height: 250px;padding-right: 0;">
                     <div class="col=10 hondI">
                         <h5 class="orangebold">@dog.Name</h5>
-                        <p class="noMargin">@dog.Breed</p>
-                        <p class="noMargin">@dog.Date_of_birth</p>
-                        <p class="noMargin">@dog.Gender</p>
-                        <p class="noMargin">@dog.Note</p><br>
+                        <p class="noMargin">Ras: @dog.Breed</p>
+                        <p class="noMargin">Geboortedatum: @dog.Date_of_birth</p>
+                        <p class="noMargin">Geslacht: @dog.Gender</p>
+                        <p class="noMargin">Opmerking: @dog.Note</p><br>
                         <p class="noMargin">Cursussen:</p>
 
                         @if (dogs![dog].Count > 0)

@@ -8,6 +8,7 @@ namespace Dog_school.Database
     {
         /// <summary>
         ///     String used for connecting to the database
+        ///     TODO: Add config file for login credentials
         /// </summary>
         public static readonly string? ConnectString;
 
