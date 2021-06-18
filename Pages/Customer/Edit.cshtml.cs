@@ -23,6 +23,10 @@ namespace Dog_school.Pages.Customer
             if (user?.Admin_permission != true) return RedirectToPage("/Index");
             var customer = await UserRepository.GetUser(id);
 
+            // Add users for searching
+            var users = await UserRepository.GetUsers();
+            ViewData["user search"] = users;
+
             // Set hasData and return if no customer was found
             ViewData["hasData"] = customer != null;
             if (customer == null) return Page();
@@ -102,7 +106,7 @@ namespace Dog_school.Pages.Customer
             // Create dog instance based on input
             var dog = new Dog
             {
-                User_ID = (int) id,
+                User_ID = (int)id,
                 Name = name,
                 Breed = breed,
                 Date_of_birth = birthday,
@@ -119,6 +123,14 @@ namespace Dog_school.Pages.Customer
             var dogId = await DogRepository.GetDogId(dog);
             await CourseRepository.Enroll(dogId, course);
             return await OnGetAsync(id);
+
         }
+
+        // TODO: <zoekbalk werkend maken>
+        public IActionResult OnPostEdit( [FromForm] int? id)
+        {
+            return RedirectToPage("/Customer/Edit", new { id });
+        }
+
     }
 }

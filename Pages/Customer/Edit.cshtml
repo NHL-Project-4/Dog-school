@@ -8,13 +8,28 @@
 }
 
 <style>
-    #navLinks{opacity: 1;}
-    #logoutbtn{opacity: 1;}
-    
-    .orangebold{color: #fd7e14;font-weight: bold}
-    .floaty{float: left;}
-    .noMargin{margin: 0;}
-    .OrangeButton{
+    #navLinks {
+        opacity: 1;
+    }
+
+    #logoutbtn {
+        opacity: 1;
+    }
+
+    .orangebold {
+        color: #fd7e14;
+        font-weight: bold
+    }
+
+    .floaty {
+        float: left;
+    }
+
+    .noMargin {
+        margin: 0;
+    }
+
+    .OrangeButton {
         background: #fd7e14;
         color: white;
         border-radius: 15px;
@@ -23,22 +38,36 @@
         padding-left: 10px;
         padding-right: 10px;
     }
-    
-    .hondI{float: left;}
-    .badge{float: right;}    
+
+    .hondI {
+        float: left;
+    }
+
+    .badge {
+        float: right;
+    }
 </style>
 
+@* TODO: <zoekbalk werkend maken> *@
 <div class="row-1">
     <h2 class="orangebold">Klant bewerken</h2>
 
     <div class="col-4" style="margin: 0 auto; margin-bottom: 3%;">
-        <form>
+        <form method="post" id="search">
             <label class="orangebold">Zoek Klant</label>
-            <input type="search" class="form-control" name="naamKlant" placeholder="Klant naam">
+            <input asp-page-handler="Edit" type="search" list="users" />
+
+            <datalist id="users">
+                @foreach (var user in (IEnumerable<User>)ViewData["user search"])
+                {
+
+                    <option value="@user.User_ID"> @user.Name</option>
+                }
+            </datalist>
         </form>
     </div>
 
-    @if ((bool) ViewData["hasData"])
+    @if ((bool)ViewData["hasData"])
     {
         <div class="col-4 floaty" style="margin-top:5px; margin-bottom: 5px;">
             <h4 class="orangebold" style="margin:3%">Gegevens klant</h4>
@@ -87,7 +116,11 @@
 
         <div class="col-4 floaty">
             <h4 class="orangebold" style="margin:3%">Gegevens honden</h4>
+<<<<<<< Updated upstream
             @foreach (var dog in dogs!.Keys)
+=======
+            @foreach (var dog in (List<Dog>)ViewData["dogs"])
+>>>>>>> Stashed changes
             {
                 <div class="col-12" style="border: 1px solid lightgrey; border-radius: 20px; min-height: 250px;padding-right: 0;">
                     <div class="col=10 hondI">
