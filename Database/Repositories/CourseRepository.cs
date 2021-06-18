@@ -21,6 +21,22 @@ namespace Dog_school.Database.Repositories
         }
 
         /// <summary>
+        ///     Gets a list of course names for the specified dog
+        /// </summary>
+        /// <param name="dogId">The dog to gather course names for</param>
+        /// <returns>A list of course names, or null if not found</returns>
+        public static async Task<IEnumerable<string>?> GetCourseNames(int? dogId)
+        {
+            if (dogId == null) return null;
+
+            var connection = await GetConnection();
+            var result = await connection.QueryAsync<string>(
+                "SELECT course.Name FROM dog_course INNER JOIN course WHERE Dog_ID = @DogId AND course.Course_ID = dog_course.Course_ID",
+                new {DogId = dogId});
+            return result;
+        }
+
+        /// <summary>
         ///     Saves a course instance in the database
         /// </summary>
         /// <param name="course">The course to save or update</param>

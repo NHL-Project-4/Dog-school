@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "Klant bewerken pagina";
+    var dogs = (Dictionary<Dog, List<string>>?) ViewData["dogs"];
 }
 
 <style>
@@ -63,17 +64,22 @@
                 <input type="text" class="form-control" name="name" id="name" placeholder="Naam Hond"><br>
                 <input type="text" class="form-control" name="breed" id="breed" placeholder="Ras Hond"><br>
                 <input type="date" class="form-control" name="birthday" id="birthday" placeholder="Geboorte Datum"><br>
-
-                @* TODO: Replace with select *@
-                <input type="text" class="form-control" name="gender" id="gender" placeholder="Geslacht"><br>
                 <input type="text" class="form-control" name="note" id="note" placeholder="Opmerking"><br>
 
-                <select class="form-control" name="course" id="course">
-                    @* TODO: Courses *@
-                    <option value="puppyCursusM">Puppy cursus (Maandag)</option>
-                    <option value="puppyCursusDi">Puppy cursus (Dinsdag)</option>
-                    <option value="bewustSamenwerkenAW">Bewust Samenwerken A (Woensdag)</option>
+                <select class="form-control" name="gender" id="gender" placeholder="Geslacht">
+                    @foreach (var gender in Enum.GetValues(typeof(Gender)))
+                    {
+                        <option value="@gender">@gender</option>
+                    }
                 </select><br>
+
+                <select class="form-control" name="course" id="course">
+                    @foreach (var course in (IEnumerable<Course>) ViewData["courses"])
+                    {
+                        <option value="@course.Course_ID">@course.Name</option>
+                    }
+                </select><br>
+
                 <button class="OrangeButton" type="submit" asp-page-handler="DogCreate">Voeg hond toe</button>
                 <button class="OrangeButton" type="reset">Annuleren</button>
             </form>
@@ -81,7 +87,7 @@
 
         <div class="col-4 floaty">
             <h4 class="orangebold" style="margin:3%">Gegevens honden</h4>
-            @foreach (var dog in (List<Dog>) ViewData["dogs"])
+            @foreach (var dog in dogs!.Keys)
             {
                 <div id="hond1" class="col-12" style="border: 1px solid lightgrey; border-radius: 20px; min-height: 200px;padding-right: 0;">
                     <div class="col=10 hondI">
@@ -89,9 +95,21 @@
                         <p class="noMargin">@dog.Breed</p>
                         <p class="noMargin">@dog.Date_of_birth</p>
                         <p class="noMargin">@dog.Gender</p>
-                        @* TODO: Display courses *@
-                        <p class="noMargin">Cursussen</p>
-                        <p class="noMargin">@dog.Note</p>
+                        <p class="noMargin">@dog.Note</p><br>
+                        <p class="noMargin">Cursussen:</p>
+
+                        @if (dogs![dog].Count > 0)
+                        {
+                            @foreach (var course in dogs![dog])
+                            {
+                                <p class="noMargin">-@course</p>
+                            }
+                        }
+                        else
+                        {
+                            <p class="noMargin">Hond staat niet ingeschreven voor cursussen</p>
+                        }
+
                     </div>
 
                     @* <div class="badge noMargin" > *@
