@@ -2,9 +2,9 @@
 @using Dog_school.Database.Models
 @model Dog_school.Pages.Customer.Index
 
-
 @{
     ViewData["Title"] = "Klant pagina";
+    var dogs = (Dictionary<Dog, List<Lesson>>) ViewData["dogs"];
 }
 
 <style xmlns="http://www.w3.org/1999/html">
@@ -73,22 +73,27 @@ function editCustomer(state) {
         </form>
     </div>
 
-    @* TODO: Add dogs with courses *@
     <div id="hondInfo" class="col-8">
-        @foreach (var dog in (ViewData["dogs"] as List<Dog>)!)
+        @foreach (var dog in dogs.Keys)
         {
             <div class="col-12" style="margin: 3%; height: 250px;">
                 <h2 class="orangebold">@dog.Name</h2>
-                @*<img class="col-4" src="images/dog3.jpg" alt="logo" width="100%" style="float: left">
-            *@
+                @*<img class="col-4" src="images/dog3.jpg" alt="logo" width="100%" style="float: left">*@
                 <div class="col-4 dogPic" style="width: 250px; height: 200px;"></div>
+
                 <div class="col-4" style="float: left">
                     <h3 class="orangebold">Afgeronde Lessen</h3>
-                    <p>Puppycursus Les 1: 20-5-2021</p>
+                    @foreach (var lesson in dogs[dog].Where(lesson => lesson.Start_date.CompareTo(DateTime.Now) < 0))
+                    {
+                        <p>@lesson.Name: @lesson.Start_date</p>
+                    }
                 </div>
                 <div class="col-4" style="float: left">
                     <h3 class="orangebold">Komende Lessen</h3>
-                    <p>Puppycursus Les 1: 5-6-2021</p>
+                    @foreach (var lesson in dogs[dog].Where(lesson => lesson.Start_date.CompareTo(DateTime.Now) >= 0))
+                    {
+                        <p>@lesson.Name: @lesson.Start_date</p>
+                    }
                 </div>
             </div>
         }

@@ -1,9 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Dog_school.Database.Models;
 using Dog_school.Database.Repositories;
 using Dog_school.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using DogData =
+    System.Collections.Generic.Dictionary<Dog_school.Database.Models.Dog,
+        System.Collections.Generic.List<Dog_school.Database.Models.Lesson>>;
 
 namespace Dog_school.Pages.Customer
 {
@@ -24,9 +29,18 @@ namespace Dog_school.Pages.Customer
             ViewData["phone number"] = user.Phone_number;
             ViewData["email"] = user.Email;
 
-            // Add dogs to ViewData
-            var dogs = await DogRepository.GetDogs((int) user.User_ID);
-            ViewData["dogs"] = dogs.ToList();
+            // Create dictionary for storing dogs and their lessons
+            var dogs = new DogData();
+
+            foreach (var dog in await DogRepository.GetDogs(user.User_ID))
+            {
+                // Add lessons to dog, or empty list if none were found
+                var lessons = await LessonRepository.GetLessons(dog.Dog_ID);
+                dogs[dog] = lessons?.ToList() ?? new List<Lesson>();
+            }
+
+            // Store dogs and their lessons in ViewData
+            ViewData["dogs"] = dogs;
             return Page();
         }
 
