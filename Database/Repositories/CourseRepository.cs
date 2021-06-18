@@ -37,6 +37,23 @@ namespace Dog_school.Database.Repositories
         }
 
         /// <summary>
+        ///     Enrolls a dog into the specified course id
+        /// </summary>
+        /// <param name="dogId">The dog to enroll</param>
+        /// <param name="courseId">The course to enroll into</param>
+        /// <returns>The amount of rows affected</returns>
+        public static async Task<int> Enroll(int? dogId, int? courseId)
+        {
+            if (dogId == null || courseId == null) return 0;
+
+            var connection = await GetConnection();
+            var result = await connection.ExecuteAsync(
+                "INSERT INTO dog_course(Dog_ID, Course_ID) VALUES(@DogId, @CourseId)",
+                new {DogId = dogId, CourseId = courseId});
+            return result;
+        }
+
+        /// <summary>
         ///     Saves a course instance in the database
         /// </summary>
         /// <param name="course">The course to save or update</param>

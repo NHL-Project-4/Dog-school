@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
 using Dog_school.Database.Models;
@@ -8,6 +9,20 @@ namespace Dog_school.Database.Repositories
 {
     public static class DogRepository
     {
+        /// <summary>
+        ///     Gets a dog from an existing dog instance
+        ///     Used for getting the dogs id after creating a new dog
+        /// </summary>
+        /// <returns>The stored dog</returns>
+        public static async Task<int?> GetDogId(Dog dog)
+        {
+            var connection = await GetConnection();
+            var result = await connection.QueryAsync<int>(
+                "SELECT Dog_ID FROM dog WHERE Name = @Name AND User_ID = @UserId AND Date_of_birth = @DateOfBirth",
+                new {dog.Name, UserId = dog.User_ID, DateOfBirth = dog.Date_of_birth});
+            return result.FirstOrDefault();
+        }
+
         /// <summary>
         ///     Gets all stored dogs
         /// </summary>

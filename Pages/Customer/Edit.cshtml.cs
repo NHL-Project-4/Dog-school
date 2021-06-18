@@ -84,7 +84,7 @@ namespace Dog_school.Pages.Customer
 
         public async Task<IActionResult> OnPostDogCreate([FromForm] int? id, [FromForm] string name,
             [FromForm] string breed, [FromForm] DateTime birthday, [FromForm] string gender, [FromForm] string note,
-            [FromForm] string course)
+            [FromForm] int? course)
         {
             // Get user from session
             var user = await HttpContext.Session.GetUser();
@@ -100,7 +100,6 @@ namespace Dog_school.Pages.Customer
             if (!Enum.TryParse<Gender>(gender, true, out var value)) return RedirectToPage("/Index");
 
             // Create dog instance based on input
-            // TODO: Parse course
             var dog = new Dog
             {
                 User_ID = (int) id,
@@ -112,8 +111,13 @@ namespace Dog_school.Pages.Customer
                 Note = note
             };
 
-            // Save newly created dog in database
+            // Save newly created dog in database and return if course wasn't specified
             await DogRepository.Save(dog);
+            if (course == null) return await OnGetAsync(id);
+
+            // Enroll the inserted dog into the requested course
+            var dogId = await DogRepository.GetDogId(dog);
+            await CourseRepository.Enroll(dogId, course);
             return await OnGetAsync(id);
         }
     }
