@@ -8,44 +8,11 @@
 }
 
 <style>
-    #navLinks {
-        opacity: 1;
-    }
-
-    #logoutbtn {
-        opacity: 1;
-    }
-
-    .orangebold {
-        color: #fd7e14;
-        font-weight: bold
-    }
-
-    .floaty {
-        float: left;
-    }
-
-    .noMargin {
-        margin: 0;
-    }
-
-    .OrangeButton {
-        background: #fd7e14;
-        color: white;
-        border-radius: 15px;
-        border: none;
-        padding: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    .hondI {
-        float: left;
-    }
-
-    .badge {
-        float: right;
-    }
+    #navLinks{opacity: 1;}
+    #logoutbtn{opacity: 1;}
+    
+    .hondI{float: left;}
+    .badge{float: right;}    
 </style>
 
 @* TODO: <zoekbalk werkend maken> *@
@@ -80,7 +47,7 @@
                 <input type="email" class="form-control" name="email" id="email" placeholder="@ViewData["email"]" pattern="^[^@@\s]{1,64}@@[^@@\s]{1,64}\.[^@@\s]{1,64}$"><br>
                 <input type="text" class="form-control" name="note" id="note" placeholder="@ViewData["note"]"><br>
                 <button class="OrangeButton" type="submit" asp-page-handler="CustomerEdit">Opslaan</button>
-                <button class="OrangeButton" type="reset">Annuleren</button>
+                <button class="OrangeButtonInv" type="reset">Annuleren</button>
             </form>
         </div>
 
@@ -109,7 +76,7 @@
                 </select><br>
 
                 <button class="OrangeButton" type="submit" asp-page-handler="DogCreate">Voeg hond toe</button>
-                <button class="OrangeButton" type="reset">Annuleren</button>
+                <button class="OrangeButtonInv" type="reset">Annuleren</button>
             </form>
         </div>
 

@@ -62,10 +62,59 @@ body {
   /* Margin bottom by footer height */
   margin-bottom: 60px;
 }
+
 .footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
+}
+
+/* Lisanne's custom Classes ---------------------*/
+.orangebold {
+  color: #fd7e14;
+  font-weight: bold
+}
+
+.floaty {
+  float: left;
+}
+
+.noMargin {
+  margin: 0;
+}
+
+.noPadding {
+  padding: 0;
+}
+
+.OrangeButton {
+  background: #fd7e14;
+  color: white;
+  border-radius: 15px;
+  border: none;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.OrangeButtonInv {
+  background: white;
+  color: #fd7e14;
+  border-radius: 15px;
+  border: #fd7e14 3px solid;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.greyBorder {
+  border: lightgrey 1px solid;
+  border-radius: 20px;
+}
+
+.linky {
+  color: dodgerblue;
+  cursor: pointer;
 }
