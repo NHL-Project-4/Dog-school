@@ -3,37 +3,101 @@
 
 @{
     ViewData["Title"] = "Cursussen beheren pagina";
+    @using Database.Models
+    @using Database.Repositories
 }
 
 <style>
-    #navLinks{opacity: 1;}
-    #logoutbtn{opacity: 1;}
+    #navLinks {
+        opacity: 1;
+    }
+
+    #logoutbtn {
+        opacity: 1;
+    }
 </style>
+
 <script>
-    function showCursus () {
-      // SHOW
-      document.getElementById("cursus").style.display = "";
-      document.getElementById("cursusAanmaken").style.display = "none";
-      document.getElementById("klant").style.display = "none";
-      document.getElementById("cursusAanpassen").style.display = "none";
+    function showCursus(callObject) {
+        // SHOW
+        document.getElementById("cursus").style.display = "";
+        document.getElementById("cursusAanmaken").style.display = "none";
+        document.getElementById("klant").style.display = "none";
+        document.getElementById("cursusAanpassen").style.display = "none";
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Course/Index?handler=SetValues",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: JSON.stringify(
+                {
+                    courseID: callObject.id
+                }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (success_record) {
+
+                $('#CourseName', '#cursus').html(success_record[0]);
+                $('#start', '#cursus').html(success_record[1]);
+                $('#day', '#cursus').html(success_record[2]);
+                $('#next', '#cursus').html(success_record[3]);
+                $('#name', '#cursusAanpassen').val(success_record[0]);
+                $('#day', '#cursusAanpassen').val(success_record[1]);
+                $('#name', '#cursusAanpassen').val(success_record[2]);
+                $('#id', '#cursusAanpassen').val(success_record[4]);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "/Course/Index?handler=SetClientValues",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: JSON.stringify(
+                {
+                    courseID: callObject.id
+                }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (success_record) {
+                $(success_record).each(function () {
+                    const myObj = JSON.parse($(this));
+                    var klant = document.createElement("p");
+                    klant.innerHTML = $(this);
+                    klant.onclick = "showKlant(this)";
+                    klant.className = "noMargin linky";
+                    document.getElementById("cursusClients").appendChild(klant);
+                })
+            }
+        });
+
+
+
     }
-    function showAanmaken () {
-      // SHOW
-      document.getElementById("cursusAanmaken").style.display = "";
-      document.getElementById("cursus").style.display = "none";
-      document.getElementById("klant").style.display = "none";
-      document.getElementById("cursusAanpassen").style.display = "none";
+    function showAanmaken() {
+        // SHOW
+        document.getElementById("cursusAanmaken").style.display = "";
+        document.getElementById("cursus").style.display = "none";
+        document.getElementById("klant").style.display = "none";
+        document.getElementById("cursusAanpassen").style.display = "none";
     }
-    function showKlant () {
-      // SHOW
-      document.getElementById("klant").style.display = "";
+    function showKlant(callObject) {
+        // SHOW
+        document.getElementById("klant").style.display = "";
+       
     }
-    function showAanpassen () {
-      // SHOW
-      document.getElementById("cursusAanpassen").style.display = "";
-      document.getElementById("cursus").style.display = "none";
-      document.getElementById("cursusAanmaken").style.display = "none";
-      document.getElementById("klant").style.display = "none";
+    function showAanpassen() {
+        // SHOW
+        document.getElementById("cursusAanpassen").style.display = "";
+        document.getElementById("cursus").style.display = "none";
+        document.getElementById("cursusAanmaken").style.display = "none";
+        document.getElementById("klant").style.display = "none";
     }
 </script>
 <div class="row-1">
@@ -46,70 +110,61 @@
             <img class="floaty noMargin" src="images/baseline_sort_black_36dp.png" style="width: 25px;">
         </div>
         <div>
+            @foreach (Course course in await CourseRepository.GetCourses())
+            {
+                <div class="cursus">
+                    <p class="col-6 noMargin floaty linky" id="@course.Course_ID" onclick="showCursus(this)">@course.Name</p>
+                    <p class="col-6 noMargin floaty">@course.Start_date.ToString("dd-MM-yyyy")</p>
+                </div>
+            }
+
             <div class="cursus">
-                <p class="col-6 noMargin floaty linky" onclick="showCursus()">Puppy cursus (Maandag)</p>
-                <p class="col-6 noMargin floaty">7-6-2021</p>
-            </div>
-            <div class="cursus">
-                <p class="col-6 noMargin floaty linky" onclick="showCursus()">Puppy cursus (Dinsdag)</p>
-                <p class="col-6 noMargin floaty">8-6-2021</p>
-            </div>
-            <div class="cursus">
-                <p class="col-6 noMargin floaty linky" onclick="showCursus()">Bewust samenwerken A (Woensdag)</p>
-                <p class="col-6 noMargin floaty">9-6-2021</p>
-            </div>
-            <div class="cursus">
-                <p class="col-12 noMargin floaty " onclick="showAanmaken()" style="color: #fd7e14">+ Cursus Toevoegen</p>
+                <p class="col-12 noMargin floaty" onclick="showAanmaken()" style="color: #fd7e14">+ Cursus Toevoegen</p>
             </div>
         </div>
-
-
     </div>
-
 
     <div id="cursus" class="col-4 floaty" style="display: none">
         <div class="col-11 " style="margin: 0 auto;">
-            <h4 class="orangebold floaty noMargin col-10" style="padding: 0">Cursus naam</h4>
-            <img class="floaty col-2" width="80%" onclick="showAanpassen()" src="images/baseline_create_black_24dp.png">
-            <p class="noMargin">Datum Start</p>
-            <p class="noMargin">Lesdag</p>
-            <p class="noMargin">Aankomende lesdatum</p>
-            <div class="noMargin greyBorder" style="min-height: 100px; padding: 2px;">
-                <p class="noMargin linky" onclick="showKlant()">Cursist A</p>
-                <p class="noMargin linky" onclick="showKlant()">Cursist B</p>
+            <h4 class="orangebold floaty noMargin col-10" style="padding: 0" id="CourseName"></h4>
+            <img class="floaty col-2" width="80%" id="" onclick="showAanpassen(this)" src="images/baseline_create_black_24dp.png">
+            <p class="noMargin" id="start">Startdatum</p>
+            <p class="noMargin" id="day">Lesdag</p>
+            <p class="noMargin" id="next">Aankomende lesdatum</p>
+            <div class="noMargin greyBorder" id="cursusClients" style="min-height: 100px; padding: 2px;">
+                <p class="noMargin linky" onclick="showKlant(this)">Cursist A</p>
             </div>
-
         </div>
-
-
     </div>
     <div id="cursusAanpassen" class="col-4 floaty" style="display: none">
         <div class="col-11 " style="margin: 0 auto;">
-            <form class="col-12" method="post">
-                <input type="text" class="form-control" id="name" value="Cursus Naam"/><br>
-                <input type="text" class="form-control" id="day" value="Lesdag"/><br>
-                <input type="text" class="form-control" id="name" value="Aankomende Lesdatum"/><br>
+            <form class="col-12" method="post" asp-page-handler="EditCursus">
+                <input type="text" class="form-control" name="name" placeholder="Naam cursus" /><br>
+                <input type="date" class="form-control"  name="next"  /><br>
+                <input type="hidden" id="id" name="id" />
                 <div class="noMargin greyBorder" style="min-height: 100px; padding: 2px;">
                     <p class="noMargin">Cursist A</p>
-                    <p class="noMargin">Cursist B</p>
                 </div>
             </form>
-
         </div>
     </div>
+
     <div id="cursusAanmaken" class="col-4 floaty" style="display: none">
         <div class="col-11 " style="margin: 0 auto;">
 
             <form class="col-12" method="post">
-                <input type="text" class="form-control" id="name" value="Cursus Naam"/><br>
-                <input type="date" class="form-control" id="date" value="Start datum"/><br>
-                <input type="text" class="form-control" id="day" value="Lesdag"/><br>
+                <input type="text" class="form-control" name="name" placeholder="Cursus Naam" /><br>
+                <input type="date" class="form-control" name="date" placeholder="Start datum" /><br>
+                <input type="date" class="form-control" name="end" placeholder="Eind datum" /><br>
 
-                <button class="OrangeButton" type="submit" onclick="reversehideit()">Save</button>
-                <button class="OrangeButton" type="submit" onclick="reversehideit()">Cancel</button>
+                <button class="OrangeButton" type="submit" onclick="reversehideit()" asp-page-handler="SaveCourse">Save</button>
+                <button class="OrangeButton" type="reset" onclick="reversehideit()">Cancel</button>
             </form>
 
         </div>
+
+
+
         @*<div class="badge noMargin" >
                 <img src="images/baseline_military_tech_black_24dp.png" width="100%" height="100%">
             </div>*@

@@ -50,6 +50,25 @@ namespace Dog_school.Database.Repositories
             return result;
         }
 
+        public static async Task<IEnumerable<Dog>> GetDogsFromCourse(int? courseId)
+        {
+            if (courseId == null) return new List<Dog>();
+
+            var connection = await GetConnection();
+            var result =
+                await connection.QueryAsync<Dog>("SELECT * FROM dog WHERE Course_ID = @CourseId", new { CourseID = courseId });
+            return result;
+        }
+
+
+
+
+
+
+
+
+
+
         /// <summary>
         ///     Removes the specified dog
         /// </summary>
