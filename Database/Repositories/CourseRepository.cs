@@ -19,7 +19,7 @@ namespace Dog_school.Database.Repositories
                 await connection.QueryAsync<Course>("SELECT * FROM course");
             return result;
         }
-        public static async Task<Course> GetCourse(int id)
+        public static async Task<Course?> GetCourse(int id)
         {
             var connection = await GetConnection();
             var result =

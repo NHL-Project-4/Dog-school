@@ -76,7 +76,7 @@ namespace Dog_school.Pages.Course
         }
 
 
-        public async void OnPostEditCursus([FromForm] string name, [FromForm] DateTime date, [FromForm] DateTime day, [FromForm] int? id)
+        public async Task<IActionResult> OnPostEditCursus([FromForm] string name, [FromForm] DateTime date, [FromForm] int? id)
         {
             var course = new Database.Models.Course
             {
@@ -85,14 +85,22 @@ namespace Dog_school.Pages.Course
                 Start_date = date
             };
             await CourseRepository.Save(course);
-        
+            return Page();
         }
 
-
-        public void OnGet()
+        public async Task<IActionResult> OnPostSaveCourse([FromForm] string name, [FromForm] DateTime date, [FromForm] DateTime end) 
         {
+            var course = new Database.Models.Course
+            {
+                Name = name,
+                Start_date = date,
+                Finish_date = end
+            };
+            await CourseRepository.Save(course);
 
+            return Page();
         }
+
     }
 
     public class Objects

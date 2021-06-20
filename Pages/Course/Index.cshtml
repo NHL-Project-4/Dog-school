@@ -114,7 +114,7 @@
             {
                 <div class="cursus">
                     <p class="col-6 noMargin floaty linky" id="@course.Course_ID" onclick="showCursus(this)">@course.Name</p>
-                    <p class="col-6 noMargin floaty">@course.Start_date</p>
+                    <p class="col-6 noMargin floaty">@course.Start_date.ToString("dd-MM-yyyy")</p>
                 </div>
             }
 
@@ -139,10 +139,9 @@
     <div id="cursusAanpassen" class="col-4 floaty" style="display: none">
         <div class="col-11 " style="margin: 0 auto;">
             <form class="col-12" method="post" asp-page-handler="EditCursus">
-                <input type="text" class="form-control" id="name" value="Naam cursus" /><br>
-                <input type="text" class="form-control" id="day" value="Lesdag" /><br>
-                <input type="text" class="form-control" id="next" value="Aankomende Lesdatum" /><br>
-                <input type="hidden" id="id" />
+                <input type="text" class="form-control" name="name" placeholder="Naam cursus" /><br>
+                <input type="date" class="form-control"  name="next"  /><br>
+                <input type="hidden" id="id" name="id" />
                 <div class="noMargin greyBorder" style="min-height: 100px; padding: 2px;">
                     <p class="noMargin">Cursist A</p>
                 </div>
@@ -154,12 +153,12 @@
         <div class="col-11 " style="margin: 0 auto;">
 
             <form class="col-12" method="post">
-                <input type="text" class="form-control" id="name" value="Cursus Naam" /><br>
-                <input type="date" class="form-control" id="date" value="Start datum" /><br>
-                <input type="text" class="form-control" id="day" value="Lesdag" /><br>
+                <input type="text" class="form-control" name="name" placeholder="Cursus Naam" /><br>
+                <input type="date" class="form-control" name="date" placeholder="Start datum" /><br>
+                <input type="date" class="form-control" name="end" placeholder="Eind datum" /><br>
 
-                <button class="OrangeButton" type="submit" onclick="reversehideit()">Save</button>
-                <button class="OrangeButton" type="submit" onclick="reversehideit()">Cancel</button>
+                <button class="OrangeButton" type="submit" onclick="reversehideit()" asp-page-handler="SaveCourse">Save</button>
+                <button class="OrangeButton" type="reset" onclick="reversehideit()">Cancel</button>
             </form>
 
         </div>
