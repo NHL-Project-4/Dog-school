@@ -32,13 +32,13 @@ namespace Dog_school.Pages.Customer
             if (customer == null) return Page();
 
             // Store user data in ViewData
-            ViewData["id"] = user.User_ID;
-            ViewData["name"] = user.Name;
-            ViewData["address"] = user.Address;
-            ViewData["zip code"] = user.Zip_code;
-            ViewData["phone number"] = user.Phone_number;
-            ViewData["email"] = user.Email;
-            ViewData["note"] = user.Note;
+            ViewData["id"] = customer.User_ID;
+            ViewData["name"] = customer.Name;
+            ViewData["address"] = customer.Address;
+            ViewData["zip code"] = customer.Zip_code;
+            ViewData["phone number"] = customer.Phone_number;
+            ViewData["email"] = customer.Email;
+            ViewData["note"] = customer.Note;
 
             // Filter out courses that have finished
             var courses = await CourseRepository.GetCourses();
@@ -47,7 +47,7 @@ namespace Dog_school.Pages.Customer
             // Create dictionary for storing dogs and their courses
             var dogs = new DogData();
 
-            foreach (var dog in await DogRepository.GetDogs(user.User_ID))
+            foreach (var dog in await DogRepository.GetDogs(customer.User_ID))
             {
                 // Add courses to dog, or empty list if none were found
                 var dogCourses = await CourseRepository.GetCourseNames(dog.Dog_ID);
@@ -106,7 +106,7 @@ namespace Dog_school.Pages.Customer
             // Create dog instance based on input
             var dog = new Dog
             {
-                User_ID = (int)id,
+                User_ID = (int) id,
                 Name = name,
                 Breed = breed,
                 Date_of_birth = birthday,
@@ -123,14 +123,12 @@ namespace Dog_school.Pages.Customer
             var dogId = await DogRepository.GetDogId(dog);
             await CourseRepository.Enroll(dogId, course);
             return await OnGetAsync(id);
-
         }
 
         // TODO: <zoekbalk werkend maken>
-        public IActionResult OnPostEdit( [FromForm] int? id)
+        public IActionResult OnPostEdit([FromForm] int? id)
         {
-            return RedirectToPage("/Customer/Edit", new { id });
+            return RedirectToPage("/Customer/Edit", new {id});
         }
-
     }
 }

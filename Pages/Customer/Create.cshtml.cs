@@ -30,11 +30,10 @@ namespace Dog_school.Pages.Customer
             // Redirect to login page if user is invalid or user is a customer
             if (user?.Admin_permission != true) return RedirectToPage("/Index");
 
-            // Redirect to customer create page if all input is empty
+            // Redirect to customer create page if required input is empty
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(address) ||
                 string.IsNullOrWhiteSpace(postalCode) || string.IsNullOrWhiteSpace(phoneNumber) ||
-                string.IsNullOrWhiteSpace(email) ||
-                string.IsNullOrWhiteSpace(note)) return RedirectToPage("/Customer/Create");
+                string.IsNullOrWhiteSpace(email)) return RedirectToPage("/Customer/Create");
 
             // Create account instance based on input
             var account = new User

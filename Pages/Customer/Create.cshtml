@@ -18,11 +18,11 @@
     <div class="col-4 floaty">
         <h4 class="orangebold" style="margin:3%">Gegevens Klant</h4>
         <form method="post">
-            <input type="text" class="form-control" name="username" id="username" placeholder="Naam klant"><br>
-            <input type="text" class="form-control" name="address" id="address" placeholder="Adres"><br>
-            <input type="text" class="form-control" name="postalCode" id="postalCode" placeholder="Postcode en Woonplaats"><br>
-            <input type="tel" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="TelefoonNummer" pattern="^(\+31( |)|)((0\d|1\d|\d)\d{2})(( |)\d{2}){3}$"><br>
-            <input type="email" class="form-control" name="email" id="email" placeholder="E-mailadres" pattern="^[^@@\s]{1,64}@@[^@@\s]{1,64}\.[^@@\s]{1,64}$"><br>
+            <input type="text" class="form-control" name="username" id="username" required placeholder="Naam klant"><br>
+            <input type="text" class="form-control" name="address" id="address" required placeholder="Adres"><br>
+            <input type="text" class="form-control" name="postalCode" id="postalCode" required placeholder="Postcode en Woonplaats"><br>
+            <input type="tel" class="form-control" name="phoneNumber" id="phoneNumber" required placeholder="Telefoon nummer" pattern="^(\+31( |)|)((0\d|1\d|\d)\d{2})(( |)\d{2}){3}$"><br>
+            <input type="email" class="form-control" name="email" id="email" required placeholder="E-mail adres" pattern="^[^@@\s]{1,64}@@[^@@\s]{1,64}\.[^@@\s]{1,64}$"><br>
             <input type="text" class="form-control" name="note" id="note" placeholder="Opmerking"><br>
             <button class="OrangeButton" type="submit" asp-page-handler="CustomerCreate">Opslaan</button>
         </form>
