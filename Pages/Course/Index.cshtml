@@ -1,10 +1,10 @@
 ﻿@page
+@using Dog_school.Database.Models
+@using Dog_school.Database.Repositories
 @model Dog_school.Pages.Course.Index
 
 @{
     ViewData["Title"] = "Cursussen beheren pagina";
-    @using Database.Models
-    @using Database.Repositories
 }
 
 <style>
@@ -139,9 +139,9 @@
     <div id="cursusAanpassen" class="col-4 floaty" style="display: none">
         <div class="col-11 " style="margin: 0 auto;">
             <form class="col-12" method="post" asp-page-handler="EditCursus">
-                <input type="text" class="form-control" name="name" placeholder="Naam cursus" /><br>
-                <input type="date" class="form-control"  name="next"  /><br>
-                <input type="hidden" id="id" name="id" />
+                <input type="text" class="form-control" name="name" placeholder="Naam cursus"/><br>
+                <input type="date" class="form-control" name="next"/><br>
+                <input type="hidden" id="id" name="id"/>
                 <div class="noMargin greyBorder" style="min-height: 100px; padding: 2px;">
                     <p class="noMargin">Cursist A</p>
                 </div>
@@ -153,16 +153,15 @@
         <div class="col-11 " style="margin: 0 auto;">
 
             <form class="col-12" method="post">
-                <input type="text" class="form-control" name="name" placeholder="Cursus Naam" /><br>
-                <input type="date" class="form-control" name="date" placeholder="Start datum" /><br>
-                <input type="date" class="form-control" name="end" placeholder="Eind datum" /><br>
+                <input type="text" class="form-control" name="name" placeholder="Cursus Naam"/><br>
+                <input type="date" class="form-control" name="date" placeholder="Start datum"/><br>
+                <input type="date" class="form-control" name="end" placeholder="Eind datum"/><br>
 
                 <button class="OrangeButton" type="submit" onclick="reversehideit()" asp-page-handler="SaveCourse">Save</button>
                 <button class="OrangeButton" type="reset" onclick="reversehideit()">Cancel</button>
             </form>
 
         </div>
-
 
 
         @*<div class="badge noMargin" >
