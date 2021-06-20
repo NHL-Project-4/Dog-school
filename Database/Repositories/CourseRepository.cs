@@ -19,6 +19,17 @@ namespace Dog_school.Database.Repositories
                 await connection.QueryAsync<Course>("SELECT * FROM course");
             return result;
         }
+        public static async Task<Course> GetCourse(int id)
+        {
+            var connection = await GetConnection();
+            var result =
+                await connection.QuerySingleAsync<Course>("SELECT * FROM course WHERE Course_ID = @CourseID", new { CourseID = id })
+                ;
+            return result;
+        }
+
+
+
 
         /// <summary>
         ///     Gets a list of course names for the specified dog

@@ -93,5 +93,21 @@ namespace Dog_school.Database.Repositories
                     : "UPDATE user SET Email = @Email, Password = @Password, Name = @Name, Address = @Address, Zip_code = @ZipCode, Phone_number = @PhoneNumber, Admin_permission = @AdminPermission, Note = @Note WHERE User_ID = @UserId"
                 , new {UserId = user.User_ID, user.Email, user.Password, user.Name, user.Address, ZipCode = user.Zip_code, PhoneNumber = user.Phone_number, AdminPermission = user.Admin_permission, user.Note});
         }
+
+
+        public static async Task<IEnumerable<User>> GetUsersFromCourse(int courseID)
+        {
+            List<User> listResult = new List<User>();
+            foreach (Dog dog in await DogRepository.GetDogsFromCourse(courseID))
+            {
+
+                listResult.Add(await GetUser(dog.User_ID));
+            
+            
+            
+            }
+            return listResult;
+        }
+
     }
 }
