@@ -56,17 +56,11 @@ namespace Dog_school.Database.Repositories
 
             var connection = await GetConnection();
             var result =
-                await connection.QueryAsync<Dog>("SELECT * FROM dog WHERE Course_ID = @CourseId", new { CourseID = courseId });
+                await connection.QueryAsync<Dog>(
+                    "SELECT * FROM dog INNER JOIN dog_course ON dog.Dog_ID = dog_course.Dog_ID WHERE dog_course.Course_ID = @courseId",
+                    new {courseId});
             return result;
         }
-
-
-
-
-
-
-
-
 
 
         /// <summary>
